@@ -323,4 +323,55 @@ function tripletsSumAllValues(array, sum) {
   }
   return res;
 }
-console.log(tripletsSumAllValues([1, 2, 3, 7, 9], 14));
+//console.log(tripletsSumAllValues([1, 2, 3, 7, 9], 14));
+
+//put 1 at begining of array and 0 at the end, without any other arrays
+//funSortingNums([3, 0, 0, 0, 1, 3, 3, 2, 2, 1, 0]);
+const funSortingNums = (array) => {
+  let end = array.length - 1;
+  for (let index = 0; index < array.length; index++) {
+    if (end <= index) {
+      break;
+    }
+    if (array[index] === 1) {
+      continue;
+    }
+    //starting with 1
+    if (array[index] !== 1 && array[end] === 1) {
+      let temp = array[end];
+      array[end] = array[index];
+      array[index] = temp;
+      index++;
+      end--;
+    }
+    end--;
+    index--;
+  }
+  console.log(array);
+  end = array.length - 1;
+
+  for (let index = 0; index < array.length; index++) {
+    //starting with 1
+    if (end <= index) {
+      break;
+    }
+    if (array[index] !== 0) {
+      continue;
+    }
+    if (array[index] === 0 && array[end] !== 0) {
+      let temp = array[end];
+      array[end] = array[index];
+      array[index] = temp;
+
+      end--;
+    }
+
+    if (array[index] === 0 && array[end] === 0) {
+      end--;
+      index--;
+    }
+  }
+  console.log(array);
+};
+
+funSortingNums([3, 0, 0, 0, 1, 3, 3, 2, 2, 1, 0]);
