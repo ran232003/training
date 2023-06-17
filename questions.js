@@ -19,7 +19,7 @@ const checkPrime2 = (num) => {
   if (num === 2 || num === 1) {
     return true;
   }
-  divider = Math.floor(num / 2);
+  let divider = Math.floor(num / 2);
   for (let index = 3; index < divider; index = index + 2) {
     if (num % index === 0) {
       return false;
@@ -74,7 +74,7 @@ function primeFactors2(num) {
 function fib(n) {
   let a1 = 1;
   let a2 = 1;
-  fibArray = [];
+  let fibArray = [];
   fibArray.push(a1);
   fibArray.push(a2);
 
@@ -103,7 +103,7 @@ function findFib(n) {
 
 function recursiveFib(n) {
   if (n <= 1) return n;
-  else return fibonacci(n - 1) + fibonacci(n - 2);
+  else return recursiveFib(n - 1) + recursiveFib(n - 2);
 }
 
 //4. Greatest Common Divisor
@@ -254,3 +254,73 @@ var romanToInt = function (s) {
   return sum;
 };
 //console.log(romanToInt("CXCI"));
+//14. Longest Common Prefix
+//every() checking on every index a condition returning true false
+const commonPrefix = (strs) => {
+  let prefix = "";
+  for (let index = 0; index < strs[0].length; index++) {
+    let currentChar = strs[0][index];
+    let check = strs.every((charArray) => {
+      return charArray[index] === currentChar;
+    });
+    if (check) {
+      prefix = prefix + currentChar;
+    } else {
+      return prefix;
+    }
+  }
+  return prefix;
+};
+//console.log(commonPrefix(["cir", "car"]));
+//20. Valid Parentheses
+
+var isValid = function (s) {
+  let map = {
+    "[": "]",
+    "{": "}",
+    "(": ")",
+  };
+  let stack = [];
+  let top = 0;
+  if (s.length % 2 !== 0) {
+    return false;
+  }
+  stack.push(map[s[0]]);
+  top++;
+  for (let index = 1; index < s.length; index++) {
+    if (stack[top - 1] === s[index]) {
+      stack.pop();
+      top--;
+    } else {
+      console.log(s[index]);
+      stack[top] = map[s[index]];
+      top++;
+    }
+  }
+  console.log(stack);
+  return stack.length === 0;
+};
+console.log(isValid("([])"));
+
+//idea example
+//[1,2,3],6
+//current_sum = 6-1 =>5
+//check if set has(5-2) = >3 if yes we will take them all
+//
+function tripletsSumAllValues(array, sum) {
+  let res = [];
+  for (let index = 0; index < array.length - 2; index++) {
+    let set = new Set();
+    let current_sum = sum - array[index];
+    for (let j = 0; j < array.length; j++) {
+      if (set.has(current_sum - array[j])) {
+        res.push([array[index], array[j], current_sum - array[j]]);
+        break;
+      }
+
+      set.add(array[j]);
+    }
+  }
+  return res;
+}
+console.log(tripletsSumAllValues([1, 2, 3, 7, 9], 14));
