@@ -1,23 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import NavigationBar from "./NavigationBar";
+import { Navigate, Route, Routes } from "react-router-dom";
+import MainTable from "./pages/ag-grid/MainTable";
+import MainForm from "./pages/form/MainForm";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <NavigationBar />
+      <Routes>
+        <Route path="/table" element={<MainTable />} />
+        <Route path="/form" element={<MainForm />} />
+        <Route path="/" element={<Navigate to="/table" />} />
+      </Routes>
     </div>
   );
 }

@@ -1,0 +1,11 @@
+.mainTable {
+  width: 100%;
+  height: 100%;
+}
+.mainTable2 {
+  width: 100%;
+  height: 700px;
+}
+.table {
+  border: yellow solid 5px;
+}
