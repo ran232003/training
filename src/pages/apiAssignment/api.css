@@ -1,0 +1,48 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cards {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+:hover.cards {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: all 2s ease;
+}
+
+:hover.cardBody {
+  background-color: #98eecc !important;
+  transition: all 2s ease;
+  /* transform: scale(1.3); */
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+.myButton {
+  margin-left: 10px;
+}
+.mainApi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.middle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.col-sm-4 {
+  flex: 0 0 auto;
+  /* width: 33.33333333%; */
+}
+@media (min-width: 576px) {
+  .col-sm-4 {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}

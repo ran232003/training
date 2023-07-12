@@ -374,4 +374,512 @@ const funSortingNums = (array) => {
   console.log(array);
 };
 
-funSortingNums([3, 0, 0, 0, 1, 3, 3, 2, 2, 1, 0]);
+//funSortingNums([3, 0, 0, 0, 1, 3, 3, 2, 2, 1, 0]);
+
+//that, given an array A of N integers, returns the smallest positive integer (greater than 0) that does not occur in A.
+function solution(A) {
+  // Implement your solution here
+  A = A.sort();
+  console.log(A);
+  let num;
+  for (let index = 0; index < A.length - 1; index++) {
+    if (A[index] !== A[index + 1] && A[index] + 1 !== A[index + 1]) {
+      num = A[index] + 1;
+    }
+  }
+  if (num == "undefined") {
+    return A.pop() + 1;
+  }
+
+  return num < 1 ? 1 : num;
+}
+// console.log(solution([-1, -3]));
+// console.log(solution([1, 21, 1, 1, 2, 5, 7]));
+var maxProfit = function (prices) {
+  let profit = 0;
+  for (let index = 0; index < prices.length; index++) {
+    for (let j = index + 1; j < prices.length; j++) {
+      if (prices[index] - prices[j] < profit) {
+        profit = prices[index] - prices[j];
+      }
+    }
+  }
+  return profit === 0 ? 0 : profit * -1;
+};
+console.log(maxProfit([7, 1, 5, 3, 6, 4]));
+var maxProfit2 = function (prices) {
+  let min = prices[0],
+    max = 0;
+
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i] - min > max) {
+      max = prices[i] - min;
+    }
+
+    if (prices[i] < min) min = prices[i];
+  }
+
+  return max;
+};
+const keyboardRowList = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
+/*
+Given an array of strings words, return the words that can be typed using letters of the alphabet on only one row of QWERTY keyboard.
+*/
+function findOneRowWords(wordList) {
+  // Implement this
+  let returnStrings = [];
+  let map = {};
+  for (let i = 0; i < keyboardRowList.length; i++) {
+    for (let j = 0; j < keyboardRowList[i].length; j++) {
+      map[keyboardRowList[i][j]] = i + 1;
+    }
+  }
+  //console.log(map);
+
+  for (let i = 0; i < wordList.length; i++) {
+    let temp = wordList[i].toLocaleLowerCase();
+    let row = map[temp[0]];
+    let count = 1;
+    for (let j = 1; j < temp.length; j++) {
+      if (row === map[temp[j]]) {
+        count++;
+      }
+    }
+    if (count === temp.length) {
+      returnStrings.push(wordList[i]);
+    }
+  }
+  return returnStrings;
+}
+
+// Tests
+
+// Expected output: ['dad', 'flash']
+// console.log(findOneRowWords(["Dad", "flash", "mom"]));
+
+// // Expected output: []
+// console.log(findOneRowWords(["cool", "hot"]));
+
+// function f12() {
+//   console.log("F2");
+// }
+// function f13() {
+//   console.log("F3");
+// }
+// setTimeout(f12);
+// f13();
+//Q2: Given a string, reverse each word in the sentence
+//Input : Hello World
+//Output : olleH dlroW
+function reverseSentence(sentence) {
+  let newSentence = sentence.split("").reverse().join("");
+  console.log(sentence.split("").reverse().join("")); //reverse order dlroW olleH
+  newSentence = newSentence.split(" ");
+  console.log(newSentence); // spliting on base of space [ 'dlroW', 'olleH' ]
+  newSentence = newSentence.reverse().join(" "); // revers the order and join the index and put space between them
+  console.log(newSentence);
+}
+//reverseSentence("Hello World");
+//Q3: How to check if an object is an array or not? Provide some code.
+
+function checkIfArray(arr) {
+  console.log(typeof arr);
+  console.log(arr instanceof Array);
+  console.log(Array.isArray(arr));
+}
+//checkIfArray([]);
+
+function emptyArray() {
+  let arr = [1, 2, 3];
+  arr.length = 0;
+}
+function checkIfInt(num) {
+  console.log(Number.isInteger(num));
+}
+//checkIfInt("2a");
+//// Q7: Make this work duplicate([1, 2, 3, 4, 5]); // [1,2,3,4,5,1,2,3,4,5]
+
+function duplicateArray(arr) {
+  console.log([...arr, ...arr]);
+  console.log(arr.concat(arr));
+}
+//duplicateArray([1, 2, 3]);
+//// Q8: Write a "mul" function which will properly when invoked as below syntax console.log(mul(2)(3)(4)); // output : 24
+
+function multiplay(x) {
+  return (y) => {
+    return (z) => {
+      return x * y * z;
+    };
+  };
+}
+//console.log(multiplay(2)(3)(4));
+
+//Q9: Write a function that would allow you to do this?
+// var addSix = createBase(6);
+// addSix(10); // returns 16
+// addSix(21); // returns 27
+function createBase(base) {
+  return (x) => {
+    console.log(x + base);
+    return x + base;
+  };
+}
+var addSix = createBase(6);
+//addSix(10); // returns 16
+//Q11: Given two strings, return true if they are anagrams of one another For example: Mary is an anagram of Army
+
+function anagramCheck(str1, str2) {
+  console.log(
+    str1.split("").sort().join("") === str2.split("").sort().join("")
+  );
+  return str1.split("").sort().join("") === str2.split("").sort().join("");
+}
+//anagramCheck("mary", "army");
+
+//put 1 at begining of array and 0 at the end, without any other arrays
+function sortOneZero(arr) {
+  let j = arr.length - 1;
+  let index = 0;
+  while (index !== j) {
+    if (arr[index] === 1) {
+      index++;
+      continue;
+    } else if (arr[index] !== 1 && arr[j] === 1) {
+      let temp = arr[index];
+      arr[index] = arr[j];
+      arr[j] = temp;
+      index++;
+      j--;
+    } else if (arr[index] !== 1 && arr[j] !== 1) {
+      j--;
+    }
+  }
+  console.log(arr);
+  j = arr.length - 1;
+  index = 0;
+  while (index < j) {
+    if (arr[index] === 1) {
+      index++;
+      continue;
+    } else if (arr[index] === 0 && arr[j] !== 0) {
+      let temp = arr[index];
+      arr[index] = arr[j];
+      arr[j] = temp;
+      index++;
+      j--;
+    } else if (arr[index] !== 0 && arr[j] !== 0) {
+      index++;
+    } else if (arr[index] !== 0 && arr[j] === 0) {
+      index++;
+      j--;
+    }
+  }
+  console.log(arr);
+}
+//sortOneZero([1, 0, 2, 2, 0, 1, 1]);
+
+//Find the missing number in a given integer array of 1 to 100 sorted array
+function findNumberSortedArray(arr) {
+  for (let index = 0; index < arr.length; index++) {
+    if (arr[index] !== arr[index + 1] - 1) {
+      console.log(arr[index] + 1);
+      return arr[index] + 1;
+    }
+  }
+}
+findNumberSortedArray([1, 2, 3, 4, 6, 7]);
+
+//Find the missing number in a given integer array of 1 to 100 not sorted array
+
+function findNumberNoSortedArray() {
+  let arr = [];
+  for (let index = 1; index < 101; index++) {
+    if (index === 10) {
+      continue;
+    }
+    arr.push(index);
+  }
+  //s=n*(a1+an)/2
+  //console.log(arr);
+  let sum = (100 * (1 + 100)) / 2;
+  console.log(sum);
+  for (let index = 0; index < arr.length; index++) {
+    sum = sum - arr[index];
+  }
+  console.log(sum);
+}
+//findNumberNoSortedArray();
+
+// Find a duplicate number in an array of integers
+function findDuplicate(arr = [1, 5, 3, 2, 7, 9, 2]) {
+  let map = {};
+  for (let index = 0; index < arr.length; index++) {
+    if (!map[arr[index]]) {
+      map[[arr[index]]] = 1;
+    } else {
+      console.log(arr[index]);
+      return arr[index];
+    }
+  }
+}
+//findDuplicate();
+////Find the largest and smallest number in an unsorted array of integers
+function findMaxMin(arr = [1, 2, -11, 222, 4]) {
+  let max = arr[0];
+  let min = arr[0];
+  for (let index = 0; index < arr.length; index++) {
+    if (max < arr[index]) {
+      max = arr[index];
+    }
+    if (min > arr[index]) {
+      min = arr[index];
+    }
+  }
+  console.log(max, min);
+}
+//findMaxMin();
+
+var isHappy = function (n) {
+  let sum = 0;
+  let set = new Set();
+  while (sum !== 1) {
+    let array = String(n).split("");
+    for (let index = 0; index < array.length; index++) {
+      sum = sum + Math.pow(Number(array[index]), 2);
+    }
+    if (set.has(sum)) {
+      return false;
+    }
+    if (sum !== 1) {
+      n = sum;
+      set.add(sum);
+      sum = 0;
+    }
+  }
+  return true;
+};
+//console.log(isHappy(19));
+
+var isIsomorphic = function (s, t) {
+  let map = {};
+  let map2 = {};
+  for (let index = 0; index < s.length; index++) {
+    const re = new RegExp(s[index], "g");
+
+    // matching the pattern
+    const count = s.match(re).length;
+    if (!map[count]) {
+      map[count] = 1;
+    } else {
+      map[count] = map[count] + 1;
+    }
+  }
+  console.log(map);
+  for (let index = 0; index < t.length; index++) {
+    const re = new RegExp(t[index], "g");
+
+    // matching the pattern
+    const count = t.match(re).length;
+    if (!map2[count]) {
+      map2[count] = 1;
+    } else {
+      map2[count] = map2[count] + 1;
+    }
+  }
+  console.log(map2);
+  for (const key in map) {
+    if (map2[key] !== map[key]) {
+      return false;
+    }
+  }
+  return true;
+};
+//console.log(isIsomorphic("bbbaaaba", "aaabbbba"));
+var isIsomorphic2 = function (s, t) {
+  if (s.length !== t.length) {
+    return false;
+  }
+  let map = {};
+  let j = 0;
+  for (let index = 0; index < s.length; index++) {
+    if (!map[s[index]]) {
+      map[s[index]] = t[index];
+      // map[t[j]] = s[index];
+    } else if (map[s[index]] !== t[index]) {
+      return false;
+    }
+  }
+  console.log(map);
+
+  s = new Set([...Object.values(map)]);
+  console.log(s, s.size);
+  return s.size === Object.keys(map).length;
+};
+//console.log(isIsomorphic2("paper", "title"));
+
+var containsDuplicate = function (nums) {
+  let set = new Set();
+  for (let index = 0; index < nums.length; index++) {
+    if (set.has(nums[index])) {
+      return true;
+    }
+    set.add(nums[index]);
+  }
+  return false;
+};
+console.log(containsDuplicate([1, 2, 3, 4, 1]));
+var isAnagram = function (s, t) {
+  return s.split("").sort().join("") === t.split("").sort().join("");
+};
+
+var addDigits = function (num) {
+  if (num < 10) {
+    return num;
+  }
+  let array = String(num).split("");
+  const initialValue = 0;
+  let sum = array.reduce(
+    (accumulator, currentValue) =>
+      parseInt(accumulator) + parseInt(currentValue),
+    initialValue
+  );
+  while (sum >= 10) {
+    // if (sum >= 10) {
+    array = String(sum).split("");
+    sum = array.reduce(
+      (accumulator, currentValue) =>
+        parseInt(accumulator) + parseInt(currentValue),
+      initialValue
+    );
+    // } else {
+    //   return sum;
+    // }
+  }
+  return sum;
+};
+//console.log(addDigits(101));
+const object = {
+  message: "Hello, World!",
+
+  getMessage() {
+    const message = "Hello, Earth!";
+    return this.message;
+  },
+};
+
+console.log(object.getMessage()); //'Hello, World!'
+//Find all duplicate numbers in an array with multiple duplicates
+
+function findAllDuplicates(array = [1, 2, 3, 3, 4, 1, 1, 6, 7, 4]) {
+  let setReturn = new Set();
+  let set = new Set();
+  for (let index = 0; index < array.length; index++) {
+    if (set.has(array[index])) {
+      setReturn.add(array[index]);
+    } else {
+      set.add(array[index]);
+    }
+  }
+  console.log(Array.from(setReturn));
+  return setReturn;
+}
+//findAllDuplicates();
+function removeAllDuplicates(array = [1, 2, 1, 3, 3, 6, 6, 7, 54]) {
+  let set = new Set();
+  for (let index = 0; index < array.length; index++) {
+    set.add(array[index]);
+  }
+  console.log(Array.from(set));
+  return Array.from(set);
+}
+//removeAllDuplicates();
+
+//7. Find all pairs in an array of integers whose sum is equal to a given number
+function findAllPair(array = [1, 4, 2, 3, 6, 5, 3, 2], num = 9) {
+  let map = {};
+  let arr = [];
+  for (let index = 0; index < array.length; index++) {
+    let key = num - array[index];
+    map[key] = array[index];
+  }
+  for (let index = 0; index < array.length; index++) {
+    if (map[array[index]]) {
+      arr.push([array[index], map[array[index]]]);
+      let val = map[array[index]];
+      delete map[array[index]];
+
+      delete map[val];
+    }
+  }
+  console.log(arr);
+  return arr;
+}
+//findAllPair();
+
+var isUgly = function (n) {
+  let arr = [2, 3, 5];
+  let index = 0;
+  let temp = n;
+  while (temp > 1 && index < 3) {
+    if (temp % arr[index] === 0) {
+      temp = temp / arr[index];
+    } else {
+      index++;
+    }
+  }
+  console.log(temp, temp === 1 ? true : false);
+  return temp === 1 ? true : false;
+};
+//isUgly(10);
+// Javascript program to find triplets in a given
+// array whose sum is zero
+function findTripleSum(array = [2, 3, -5, 9, 1, 4], sum = 7) {
+  let arr = [];
+  for (let index = 0; index < array.length - 2; index++) {
+    let set = new Set();
+    let currentSum = sum - array[index];
+    for (let j = index + 1; j < array.length; j++) {
+      if (set.has(currentSum - array[j])) {
+        arr.push([array[index], array[j], currentSum - array[j]]);
+        break;
+      } else {
+        set.add(array[j]);
+      }
+    }
+  }
+  console.log(arr);
+}
+//findTripleSum();
+var missingNumberFromArray = function (nums) {
+  //Sum = (n / 2) * (2 * a1 + (n - 1) * d)
+  let newLength = nums.length + 1;
+  let sum = (newLength / 2) * (2 * 0 + (newLength - 1) * 1);
+  console.log(sum);
+  for (let index = 0; index < nums.length; index++) {
+    sum = sum - nums[index];
+  }
+  console.log(sum);
+  return sum;
+};
+//missingNumberFromArray([0, 1, 2, 3, 5]);
+
+const deepMergeObjects = (obj1, obj2) => {
+  for (const key in obj2) {
+    if (!obj1[key]) {
+      obj1[key] = obj2[key];
+    } else {
+      if (typeof obj1[key] == "number") {
+        obj1[key] = obj1[key] + obj2[key];
+      }
+      if (Array.isArray(obj1[key])) {
+        obj1[key] = obj1[key].concat(obj2[key]);
+      }
+    }
+  }
+  console.log(obj1);
+};
+deepMergeObjects(
+  { name: "ran", person2: ["raas", "saas"], num: 4 },
+  { test: "asd", name: "bar", person2: ["2", "2"], num: 3 }
+);
