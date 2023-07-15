@@ -879,7 +879,86 @@ const deepMergeObjects = (obj1, obj2) => {
   }
   console.log(obj1);
 };
-deepMergeObjects(
-  { name: "ran", person2: ["raas", "saas"], num: 4 },
-  { test: "asd", name: "bar", person2: ["2", "2"], num: 3 }
-);
+// deepMergeObjects(
+//   { name: "ran", person2: ["raas", "saas"], num: 4 },
+//   { test: "asd", name: "bar", person2: ["2", "2"], num: 3 }
+// );
+
+///Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, which causes all the following ones to be bad.
+
+//You are given an API bool isBadVersion(version) which returns whether version is bad. Implement a function to find the first bad version.
+//You should minimize the number of calls to the API.
+
+var isBadVersion = function (n) {
+  return n >= 2;
+};
+var solution2 = function (isBadVersion) {
+  /**
+   * @param {integer} n Total versions
+   * @return {integer} The first bad version
+   */
+  return function (n) {
+    let max = n;
+    let min = 0;
+    while (true) {
+      let half = Math.floor((max + min) / 2);
+      if (isBadVersion(half) === true) {
+        max = half;
+        if (isBadVersion(half - 1) === false) {
+          return half;
+        }
+      } else {
+        min = half;
+        if (isBadVersion(half + 1) === true) {
+          return half + 1;
+        }
+      }
+    }
+  };
+};
+//let check = solution2(isBadVersion);
+//console.log(check(6));
+
+//Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+const moveZeroes = (nums = [1, 0, 0, 2, 0, 5]) => {
+  let size = nums.length;
+  for (let index = 0; index < size; index++) {
+    if (nums[index] === 0) {
+      nums.push(nums[index]);
+      //nums[index] = false;
+      nums.splice(index, 1);
+      index--;
+      size--;
+    }
+  }
+  console.log(nums);
+  // for (let i = nums.length - 1; i >= 0; i--) {
+  //   if (nums[i] === false) {
+  //     nums.splice(i, 1);
+  //   }
+  // }
+};
+//moveZeroes();
+//Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in s.
+//Input: pattern = "abba", s = "dog cat cat dog"
+//Output: true
+
+var wordPattern = function (pattern, s) {
+  let str = s.split(" ");
+  if (str.length !== pattern.length) {
+    return false;
+  }
+  let map = new Map();
+  for (let index = 0; index < str.length; index++) {
+    if (!map.has(pattern[index])) {
+      map.set(pattern[index], str[index]);
+    } else if (map.get(pattern[index]) !== str[index]) {
+      return false;
+    }
+  }
+  let set = new Set(Array.from(map.values()));
+  console.log(set, set.size);
+  return set.size === Array.from(map.keys()).length;
+};
+console.log(wordPattern("abc", "b c a"));

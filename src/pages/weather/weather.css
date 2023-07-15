@@ -1,0 +1,22 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+}
+.heartIcon {
+  margin-left: 10px;
+}
+:hover.heartIcon {
+  color: red;
+}
+h2 {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.mainCard {
+  margin-top: 20px;
+  width: fit-content;
+  margin-left: 20px;
+}

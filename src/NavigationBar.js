@@ -13,6 +13,9 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/apiAssignment">
               apiAssignment
             </Nav.Link>
+            <Nav.Link as={Link} to="/weatherHome">
+              weatherHome
+            </Nav.Link>
             <Nav.Link as={Link} to="/NestedDropDown">
               NestedDropDown
             </Nav.Link>
