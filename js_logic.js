@@ -271,3 +271,31 @@ async function sleep(millis) {
 }
 
 //console.log(sleep(9000));
+// console.log(0.1 + 0.2); //0.30000000000000004
+// console.log(0.1 + 0.2 == 0.3); //false
+//
+// many decimal fractions, such as 0.1 and 0.2, cannot be represented exactly in binary form.
+//They end up being recurring fractions, similar to how 1/3 in decimal form is 0.3333333...
+//with an infinite number of 3s.
+
+// So when you perform the addition 0.1 + 0.2, the result is a number that is very close to 0.3,
+//but not exactly equal to it. The actual result is a tiny bit larger, something like 0.30000000000000004.
+
+function isInteger(num) {
+  console.log(num % 1);
+  return num % 1 === 0;
+  return Math.round(num) === num;
+}
+//isInteger(1.2);
+//In what order will the numbers 1-4 be logged to the console when the code below is executed? Why?
+(function () {
+  console.log(1);
+  setTimeout(function () {
+    console.log(2);
+  }, 1000);
+  setTimeout(function () {
+    console.log(3);
+  }, 0);
+  console.log(4);
+})();
+//1, 4, 3, 2

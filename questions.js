@@ -961,4 +961,56 @@ var wordPattern = function (pattern, s) {
   console.log(set, set.size);
   return set.size === Array.from(map.keys()).length;
 };
-console.log(wordPattern("abc", "b c a"));
+//console.log(wordPattern("abc", "b c a"));
+
+//On each turn, the person whose turn it is will remove 1 to 3 stones from the heap.
+//The one who removes the last stone is the winner.
+var canWinNim = function (n) {
+  return n % 4 === 0 ? false : true;
+};
+
+//You are given an array coordinates, coordinates[i] = [x, y], where [x, y] represents the coordinate
+// of a point. Check if these points make a straight line in the XY plane.
+//y = mx + b
+//m = (y2 - y1) / (x2 - x1)
+var checkStraightLine = function (coordinates) {
+  let point1 = coordinates[0];
+  let point2 = coordinates[1];
+  if (point1[0] === point2[0]) {
+    let check = point1[0];
+    // need to check x not changing
+    for (let index = 1; index < coordinates.length; index++) {
+      if (check !== coordinates[index][0]) {
+        return false;
+      }
+    }
+    return true;
+  } else if (point1[1] === point2[1]) {
+    let check = point1[1];
+    // need to check x not changing
+    for (let index = 1; index < coordinates.length; index++) {
+      if (check !== coordinates[index][1]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  let m = (point2[1] - point1[1]) / (point2[0] - point1[0]);
+  console.log(m);
+  let b = point1[1] - point1[0] * m;
+  console.log(b);
+
+  for (let index = 1; index < coordinates.length; index++) {
+    if (coordinates[index][1] - coordinates[index][0] * m !== b) {
+      return false;
+    }
+  }
+  return true;
+};
+// console.log(
+//   checkStraightLine([
+//     [2, 1],
+//     [4, 2],
+//     [6, 3],
+//   ])
+// );

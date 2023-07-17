@@ -6,7 +6,6 @@ const Loading = () => {
   const loading = useSelector((state) => {
     return state.loading.loading;
   });
-  console.log(loading);
   return (
     <div>
       {loading ? (

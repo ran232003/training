@@ -7,6 +7,7 @@ import MainForm from "./pages/form/MainForm";
 import ApiAssignment from "./pages/apiAssignment/ApiAssignment";
 import NestedDropDown from "./pages/nestedDropDown/NestedDropDown";
 import HomePage from "./pages/weather/HomePage";
+import Favorites from "./pages/weather/Favorites";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/apiAssignment" element={<ApiAssignment />} />
         <Route path="/NestedDropDown" element={<NestedDropDown />} />
         <Route path="/weatherHome" element={<HomePage />} />
+        <Route path="/weatherFavorites" element={<Favorites />} />
         <Route path="/" element={<Navigate to="/table" />} />
       </Routes>
     </div>

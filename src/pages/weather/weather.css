@@ -19,4 +19,21 @@ h2 {
   margin-top: 20px;
   width: fit-content;
   margin-left: 20px;
+  text-align: center;
+}
+.list {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+}
+.itemList {
+  margin: 10px auto;
+  text-align: center;
+  flex: 0 0 auto;
+}
+@media screen and (min-width: 0) and (max-width: 991px) {
+  .list {
+    overflow: auto;
+  }
 }

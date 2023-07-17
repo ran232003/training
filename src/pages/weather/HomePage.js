@@ -8,60 +8,122 @@ import { apiCall, getCurrentAndFive } from "./weatherAip";
 import { currentWeatherApi, fiveDaysApi, locationApi } from "./urls";
 import { MockLocation, currentWeather, fiveDays } from "./mockData";
 import WeatherCard from "./components/WeatherCard";
+import WeatherList from "./components/WeatherList";
+import Loading from "../../components/LoadingSpinners";
+import { loadingAction } from "../../store/loadingData";
+import { apiHelpFunction } from "./helperFunc";
 const HomePage = () => {
-  const [weather, setWeather] = useState();
-  const [dataWeatherState, setDataWeather] = useState();
-  const [weatherList, setWeatherList] = useState([]);
+  const [favorite, setFavorite] = useState(false);
+
   const dispatch = useDispatch();
-  const getLocation = async () => {
-    navigator.geolocation.getCurrentPosition(async function (position) {
-      //   console.log("Latitude is :", position.coords.latitude);
-      //   console.log("Longitude is :", position.coords.longitude);
-      let url =
-        locationApi +
-        position.coords.latitude +
-        "," +
-        position.coords.longitude;
-      //const dataWeather = await apiCall("GET", null, url);
-      const dataWeather = MockLocation;
-      setDataWeather(dataWeather);
-      let currentWeatherUrl = currentWeatherApi.replace(
-        "locationKey",
-        dataWeather.Key
-      );
-      let fiveDaysUrl = fiveDaysApi.replace("locationKey", dataWeather.Key);
-      //   let results = await getCurrentAndFive("GET", null, [
-      //     currentWeatherUrl,
-      //     fiveDaysUrl,
-      //   ]);
-      // console.log("res", results);
-      //const fiveDaysData = await apiCall("GET", null, url);
-      const results = [currentWeather, fiveDays];
-      //   const fiveDaysData = fiveDays;
-      //   console.log(fiveDaysData);
-      //console.log(mock); //console.log(mock);
-      //   dispatch(weatherAction.mainWeather(dataWeather));
-      //   dispatch(weatherAction.setFiveDaysWeather(fiveDaysData));
-      setWeatherList(results[1]);
-      setWeather(results[0]);
-    });
+  const weatherMain = useSelector((state) => {
+    return state.weather.weatherMain;
+  });
+  const favoriteMap = useSelector((state) => {
+    return state.weather.favortiteMap;
+  });
+  const fiveDaysWeather = useSelector((state) => {
+    return state.weather.fiveDaysWeather;
+  });
+  const currentWeather = useSelector((state) => {
+    return state.weather.currentWeather;
+  });
+
+  function timeout(delay) {
+    return new Promise((res) => setTimeout(res, delay));
+  }
+  const getLocation = async (location) => {
+    await timeout(1000);
+    let mock;
+    if (location) {
+      mock = false;
+      const results = await apiHelpFunction(location, null, mock);
+      if (results) {
+        dispatch(weatherAction.setFiveDaysWeather(results[1]));
+        dispatch(weatherAction.setCurrentWeather(results[0][0]));
+        dispatch(weatherAction.mainWeather(results[2]));
+        dispatch(loadingAction.toggleLoading(false));
+      }
+    } else {
+      navigator.geolocation.getCurrentPosition(async function (position) {
+        mock = false;
+        const results = await apiHelpFunction(location, position, mock);
+        if (results) {
+          dispatch(weatherAction.setFiveDaysWeather(results[1]));
+          dispatch(weatherAction.setCurrentWeather(results[0][0]));
+          dispatch(weatherAction.mainWeather(results[2]));
+          dispatch(loadingAction.toggleLoading(false));
+        }
+      });
+    }
   };
+
+  const handleFavorite = () => {
+    let fave = !favorite;
+
+    let obj = {
+      ...currentWeather,
+      EnglishName: weatherMain.EnglishName
+        ? weatherMain.EnglishName
+        : weatherMain.LocalizedName,
+      key: weatherMain.Key,
+    };
+    dispatch(
+      weatherAction.addFavorite({
+        key: weatherMain.Key,
+        currentWeather: obj,
+      })
+    );
+
+    setFavorite(fave);
+  };
+
   useEffect(() => {
-    getLocation();
+    dispatch(loadingAction.toggleLoading(true));
+    getLocation(null);
   }, []);
 
-  return (
-    <div>
-      <div className="searchBar">
-        <Search />
-        <FavoriteBorderRoundedIcon className="heartIcon" fontSize="large" />
+  if (weatherMain && currentWeather && fiveDaysWeather) {
+    return (
+      <div>
+        <div className="searchBar">
+          <Search getLocation={getLocation} />
+          <FavoriteBorderRoundedIcon
+            onClick={handleFavorite}
+            className="heartIcon"
+            fontSize="large"
+            style={{
+              color: favorite ? "red" : null,
+            }}
+          />
+        </div>
+        <div className="mainCard">
+          <h2>
+            {weatherMain.EnglishName
+              ? weatherMain.EnglishName
+              : weatherMain.LocalizedName}
+          </h2>
+          <WeatherCard
+            weather={currentWeather}
+            temp={currentWeather.Temperature.Metric.Value}
+            main={true}
+            icon={currentWeather.WeatherIcon}
+            text={currentWeather.WeatherText}
+          />
+        </div>
+        <div>
+          <h2>{fiveDaysWeather.Headline.Text}</h2>
+          <WeatherList weatherList={fiveDaysWeather.DailyForecasts} />
+        </div>
       </div>
-      <div className="mainCard">
-        <h2>{dataWeatherState.EnglishName}</h2>
-        <WeatherCard weather={weather} main={true} />
+    );
+  } else {
+    return (
+      <div>
+        <Loading />
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default HomePage;

@@ -1,3 +1,4 @@
+import { NavDropdown } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -13,14 +14,18 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/apiAssignment">
               apiAssignment
             </Nav.Link>
-            <Nav.Link as={Link} to="/weatherHome">
-              weatherHome
-            </Nav.Link>
+            <NavDropdown title="Weather" id="navbarScrollingDropdown">
+              <NavDropdown.Item as={Link} to="/weatherHome">
+                Home
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/weatherFavorites">
+                Favorites
+              </NavDropdown.Item>
+            </NavDropdown>
+
             <Nav.Link as={Link} to="/NestedDropDown">
               NestedDropDown
             </Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

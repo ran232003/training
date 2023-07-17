@@ -6,7 +6,9 @@ export const apiCall = async (method, payload, url) => {
       const data = await response.json();
       return data;
     }
-  } catch {}
+  } catch (e) {
+    console.log(e);
+  }
 };
 export const getCurrentAndFive = async (method, payload, urls) => {
   try {
@@ -16,10 +18,10 @@ export const getCurrentAndFive = async (method, payload, urls) => {
     ]);
 
     const data1 = await response1.json();
-    console.log("Response 1:", data1);
+    // console.log("Response 1:", data1);
 
     const data2 = await response2.json();
-    console.log("Response 2:", data2);
+    // console.log("Response 2:", data2);
     return [data1, data2];
     // Continue processing the API responses as needed
   } catch (error) {
