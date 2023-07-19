@@ -30,8 +30,11 @@ const Search = (props) => {
     // console.log(t, "asdasd");
     if (value) {
       const location = searchArray.find((location) => {
-        console.log(location.LocalizedName);
-        return value.substring(0, value.indexOf(" ")) === location.LocalizedName
+        console.log(
+          location.LocalizedName,
+          value.substring(0, value.indexOf(" "))
+        );
+        return value.includes(location.LocalizedName) === true
           ? location
           : null;
       });

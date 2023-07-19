@@ -1014,3 +1014,29 @@ var checkStraightLine = function (coordinates) {
 //     [6, 3],
 //   ])
 // );
+//Given a string s, find the length of the longest substring without repeating characters.
+
+var lengthOfLongestSubstring = function (s) {
+  let tempString = "";
+  let maxLength = "";
+  for (let index = 0; index < s.length; index++) {
+    tempString = tempString + s[index];
+    let set = new Set();
+    set.add(s[index]);
+    for (let j = index + 1; j < s.length; j++) {
+      if (set.has(s[j])) {
+        break;
+      } else {
+        set.add(s[j]);
+        tempString = tempString + s[j];
+      }
+    }
+    if (tempString.length > maxLength.length) {
+      maxLength = tempString;
+    }
+    tempString = "";
+  }
+  console.log(maxLength);
+  return maxLength;
+};
+lengthOfLongestSubstring("abcabcbb");

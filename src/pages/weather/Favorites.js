@@ -1,25 +1,33 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import WeatherCard from "./components/WeatherCard";
+import { useNavigate } from "react-router-dom";
 
 const Favorites = () => {
+  const navigate = useNavigate();
+
   const weatherMap = useSelector((state) => {
     return state.weather.favortiteMap;
   });
-  console.log(weatherMap);
+  const handleClick = (obj) => {
+    console.log(obj, "click", obj.Key);
+    navigate("/weatherHome", { state: { obj: obj } });
+  };
   return (
     <div>
-      {Object.keys(weatherMap).map((key, index) => {
-        console.log(weatherMap[key]);
+      {Object.keys(weatherMap).map((Key, index) => {
         return (
-          <div className="mainCard">
-            <h2>{weatherMap[key].EnglishName}</h2>
+          <div
+            className="mainCard"
+            onClick={() => handleClick(weatherMap[Key])}
+          >
+            <h2>{weatherMap[Key].EnglishName}</h2>
             <WeatherCard
-              weather={weatherMap[key]}
-              temp={weatherMap[key].Temperature.Metric.Value}
+              weather={weatherMap[Key]}
+              temp={weatherMap[Key].Temperature.Metric.Value}
               main={true}
-              icon={weatherMap[key].WeatherIcon}
-              text={weatherMap[key].WeatherText}
+              icon={weatherMap[Key].WeatherIcon}
+              text={weatherMap[Key].WeatherText}
             />
           </div>
         );

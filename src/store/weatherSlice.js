@@ -19,15 +19,15 @@ const WeatherSlice = createSlice({
       state.currentWeather = action.payload;
     },
     addFavorite(state, action) {
-      let check = state.favortiteMap[action.payload.key];
+      let check = state.favortiteMap[action.payload.Key];
       if (check) {
         //remove fav
         let copy = { ...state.favortiteMap };
-        delete copy[action.payload.key];
+        delete copy[action.payload.Key];
         state.favortiteMap = copy;
       } else {
         //add fave
-        state.favortiteMap[action.payload.key] = action.payload.currentWeather;
+        state.favortiteMap[action.payload.Key] = action.payload.currentWeather;
       }
     },
     removeFavorite(state, action) {},

@@ -12,7 +12,10 @@ import WeatherList from "./components/WeatherList";
 import Loading from "../../components/LoadingSpinners";
 import { loadingAction } from "../../store/loadingData";
 import { apiHelpFunction } from "./helperFunc";
+import { useLocation } from "react-router-dom";
 const HomePage = () => {
+  const location = useLocation();
+  console.log("location", location);
   const [favorite, setFavorite] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,6 +46,7 @@ const HomePage = () => {
         dispatch(weatherAction.setCurrentWeather(results[0][0]));
         dispatch(weatherAction.mainWeather(results[2]));
         dispatch(loadingAction.toggleLoading(false));
+        checkFavorite(location.Key);
       }
     } else {
       navigator.geolocation.getCurrentPosition(async function (position) {
@@ -66,21 +70,42 @@ const HomePage = () => {
       EnglishName: weatherMain.EnglishName
         ? weatherMain.EnglishName
         : weatherMain.LocalizedName,
-      key: weatherMain.Key,
+      Key: weatherMain.Key,
     };
     dispatch(
       weatherAction.addFavorite({
-        key: weatherMain.Key,
+        Key: weatherMain.Key,
         currentWeather: obj,
       })
     );
 
     setFavorite(fave);
   };
-
+  const checkFavorite = (Key) => {
+    console.log(Key);
+    if (Key) {
+      if (favoriteMap[Key]) {
+        return setFavorite(true);
+      } else {
+        return setFavorite(false);
+      }
+    }
+    if (favoriteMap[weatherMain?.Key]) {
+      return setFavorite(true);
+    } else {
+      return setFavorite(false);
+    }
+  };
   useEffect(() => {
-    dispatch(loadingAction.toggleLoading(true));
-    getLocation(null);
+    if (!currentWeather) {
+      console.log(currentWeather, "in effect");
+      dispatch(loadingAction.toggleLoading(true));
+      getLocation(null);
+    } else if (location.state) {
+      console.log("else efect", location.state);
+      getLocation(location.state.obj);
+      checkFavorite();
+    }
   }, []);
 
   if (weatherMain && currentWeather && fiveDaysWeather) {

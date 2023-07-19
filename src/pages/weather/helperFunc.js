@@ -46,6 +46,7 @@ export const apiHelpFunction = async (weatherMain, position, mock) => {
 
         key = dataWeather.Key;
       } else {
+        console.log("in else", weatherMain.Key);
         key = weatherMain.Key;
         dataWeather = weatherMain;
       }
