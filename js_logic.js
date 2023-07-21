@@ -299,3 +299,35 @@ function isInteger(num) {
   console.log(4);
 })();
 //1, 4, 3, 2
+//check class
+// class == function
+function classCheck() {
+  class A {
+    constructor(x) {
+      this.x = x;
+    }
+  }
+  class B extends A {
+    constructor(b, x) {
+      super(x);
+      this.b = b;
+    }
+  }
+  let b = new B(10, 12);
+  let number = 1;
+  console.log(typeof B); //function
+  let classFunction = B;
+  let obj = b;
+  let numberObject = new Object(number);
+  console.log(numberObject); //[Function: Number]
+  if (
+    obj === null ||
+    obj === undefined ||
+    typeof classFunction !== "function"
+  ) {
+    return false;
+  } else {
+    return new Object(obj) instanceof classFunction;
+  }
+}
+classCheck();

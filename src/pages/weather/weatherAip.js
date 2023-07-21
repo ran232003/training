@@ -1,8 +1,18 @@
 export const apiCall = async (method, payload, url) => {
   try {
-    if (method === "GET") {
+    if (method !== "POST") {
       console.log(url);
-      const response = await fetch(url);
+      const response = await fetch(url, { method: method });
+      const data = await response.json();
+      return data;
+    } else if (method === "POST") {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
       const data = await response.json();
       return data;
     }

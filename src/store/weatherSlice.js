@@ -18,6 +18,9 @@ const WeatherSlice = createSlice({
     setCurrentWeather(state, action) {
       state.currentWeather = action.payload;
     },
+    setFavorites(state, action) {
+      state.favortiteMap = action.payload;
+    },
     addFavorite(state, action) {
       let check = state.favortiteMap[action.payload.Key];
       if (check) {

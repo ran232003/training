@@ -7,3 +7,6 @@ export const currentWeatherApi =
   "http://dataservice.accuweather.com/currentconditions/v1/locationKey?apikey=6jAYLwBpvKKB9w73VnO2DEAN2sPyGGpL";
 export const autoCompleteApi =
   "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=6jAYLwBpvKKB9w73VnO2DEAN2sPyGGpL&q=";
+export const addToFavorite = "http://localhost:5000/main/addFavorite";
+export const getFavoritesWeather = "http://localhost:5000/main/getFavorites";
+export const removeFavoriteApi = "http://localhost:5000/main/removeFavorite/";

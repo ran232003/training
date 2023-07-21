@@ -5,7 +5,13 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import { useDispatch, useSelector } from "react-redux";
 import { weatherAction } from "../../store/weatherSlice";
 import { apiCall, getCurrentAndFive } from "./weatherAip";
-import { currentWeatherApi, fiveDaysApi, locationApi } from "./urls";
+import {
+  addToFavorite,
+  currentWeatherApi,
+  fiveDaysApi,
+  locationApi,
+  removeFavoriteApi,
+} from "./urls";
 import { MockLocation, currentWeather, fiveDays } from "./mockData";
 import WeatherCard from "./components/WeatherCard";
 import WeatherList from "./components/WeatherList";
@@ -15,7 +21,7 @@ import { apiHelpFunction } from "./helperFunc";
 import { useLocation } from "react-router-dom";
 const HomePage = () => {
   const location = useLocation();
-  console.log("location", location);
+  //console.log("location", location);
   const [favorite, setFavorite] = useState(false);
 
   const dispatch = useDispatch();
@@ -57,12 +63,13 @@ const HomePage = () => {
           dispatch(weatherAction.setCurrentWeather(results[0][0]));
           dispatch(weatherAction.mainWeather(results[2]));
           dispatch(loadingAction.toggleLoading(false));
+          checkFavorite(results[2].Key);
         }
       });
     }
   };
 
-  const handleFavorite = () => {
+  const handleFavorite = async () => {
     let fave = !favorite;
 
     let obj = {
@@ -72,6 +79,17 @@ const HomePage = () => {
         : weatherMain.LocalizedName,
       Key: weatherMain.Key,
     };
+
+    console.log("fave", obj);
+    let data;
+    if (fave) {
+      const url = addToFavorite;
+      data = await apiCall("POST", obj, url);
+    } else {
+      let url = removeFavoriteApi + weatherMain.Key;
+      data = await apiCall("DELETE", null, url);
+    }
+    console.log(data);
     dispatch(
       weatherAction.addFavorite({
         Key: weatherMain.Key,
@@ -98,11 +116,11 @@ const HomePage = () => {
   };
   useEffect(() => {
     if (!currentWeather) {
-      console.log(currentWeather, "in effect");
+      // console.log(currentWeather, "in effect");
       dispatch(loadingAction.toggleLoading(true));
       getLocation(null);
     } else if (location.state) {
-      console.log("else efect", location.state);
+      // console.log("else efect", location.state);
       getLocation(location.state.obj);
       checkFavorite();
     }

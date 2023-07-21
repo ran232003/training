@@ -37,3 +37,6 @@ h2 {
     overflow: auto;
   }
 }
+.mainFavorite {
+  display: flex;
+}

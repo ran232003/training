@@ -29,8 +29,14 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 const cors = require("cors");
 const Person = require("./models/person");
+const mongoose = require("mongoose");
+
 app.use(cors());
+mongoose.connect(
+  "mongodb+srv://ranfa:232003@cluster0.d2yn9.mongodb.net/Weather?retryWrites=true&w=majority"
+);
 app.use("/main", mainRouter);
+
 const createData = async () => {
   try {
     const res = await Person.create({ name: "ran3", age: 33, gender: "male" });
@@ -50,4 +56,4 @@ sequelize
   .catch((err) => {
     console.log(err);
   });
-createData();
+//createData();

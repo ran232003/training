@@ -1,0 +1,88 @@
+{
+  "type": "object",
+  "properties": {
+    "LocalObservationDateTime": {
+      "type": "string"
+    },
+    "EpochTime": {
+      "type": "number"
+    },
+    "WeatherText": {
+      "type": "string"
+    },
+    "WeatherIcon": {
+      "type": "number"
+    },
+    "HasPrecipitation": {
+      "type": "boolean"
+    },
+    "EnglishName": {
+      "type": "string"
+    },
+    "PrecipitationType": {
+      "type": "null"
+    },
+    "IsDayTime": {
+      "type": "boolean"
+    },
+    "Key": {
+      "type": "string"
+    },
+    "Temperature": {
+      "type": "object",
+      "properties": {
+        "Metric": {
+          "type": "object",
+          "properties": {
+            "Value": {
+              "type": "number"
+            },
+            "Unit": {
+              "type": "string"
+            },
+            "UnitType": {
+              "type": "number"
+            }
+          },
+          "required": ["Value", "Unit", "UnitType"]
+        },
+        "Imperial": {
+          "type": "object",
+          "properties": {
+            "Value": {
+              "type": "number"
+            },
+            "Unit": {
+              "type": "string"
+            },
+            "UnitType": {
+              "type": "number"
+            }
+          },
+          "required": ["Value", "Unit", "UnitType"]
+        }
+      },
+      "required": ["Metric", "Imperial"]
+    },
+    "MobileLink": {
+      "type": "string"
+    },
+    "Link": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "LocalObservationDateTime",
+    "EpochTime",
+    "WeatherText",
+    "WeatherIcon",
+    "HasPrecipitation",
+    "PrecipitationType",
+    "IsDayTime",
+    "Temperature",
+    "MobileLink",
+    "Link",
+    "EnglishName",
+    "Key"
+  ]
+}
