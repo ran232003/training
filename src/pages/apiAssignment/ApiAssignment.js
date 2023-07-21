@@ -62,7 +62,7 @@ const ApiAssignment = () => {
             setApiData={setApiData}
           />
         </div>
-        <div className="list">
+        <div className="listApi">
           {apiData.results.map((person, index) => {
             loadCount++;
             return (
