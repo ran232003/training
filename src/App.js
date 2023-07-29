@@ -13,6 +13,9 @@ import { weatherAction } from "./store/weatherSlice";
 import { getFavoritesWeather } from "./pages/weather/urls";
 import { apiCall } from "./pages/weather/weatherAip";
 import { useEffect } from "react";
+import Auth from "./pages/auth/Auth";
+import AuthHomePage from "./pages/auth/AuthHomePage";
+import PrivateRoutes from "./components/PrivateRoutes";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +40,11 @@ function App() {
         <Route path="/NestedDropDown" element={<NestedDropDown />} />
         <Route path="/weatherHome" element={<HomePage />} />
         <Route path="/weatherFavorites" element={<Favorites />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/authHomePage" element={<AuthHomePage />} />
+        </Route>
+
         <Route path="/" element={<Navigate to="/table" />} />
       </Routes>
     </div>

@@ -26,6 +26,9 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/NestedDropDown">
               NestedDropDown
             </Nav.Link>
+            <Nav.Link as={Link} to="/auth">
+              Auth
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>

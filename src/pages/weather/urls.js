@@ -10,3 +10,4 @@ export const autoCompleteApi =
 export const addToFavorite = "http://localhost:5000/main/addFavorite";
 export const getFavoritesWeather = "http://localhost:5000/main/getFavorites";
 export const removeFavoriteApi = "http://localhost:5000/main/removeFavorite/";
+export const authSignUp = "http://localhost:5000/main/signup";

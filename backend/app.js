@@ -30,6 +30,7 @@ app.use(bodyParser.json());
 const cors = require("cors");
 const Person = require("./models/person");
 const mongoose = require("mongoose");
+const MyError = require("./models/MyError");
 
 app.use(cors());
 mongoose.connect(
@@ -47,6 +48,19 @@ const createData = async () => {
 };
 //setRecords(); check folder
 //const path = "testFiles";
+app.use((req, res, next) => {
+  let error = new MyError("not able to find page");
+  error.errorCode = 404;
+  next(error);
+});
+app.use(function (error, req, res, next) {
+  //console.log(error);
+  console.log("error controller", error.message);
+  const errorCode = error.code || 500;
+  const errorMsg = error.message || "unknown error occurd";
+  res.status(errorCode);
+  res.json({ status: "fail", msg: errorMsg });
+});
 sequelize
   .sync()
   .then((res) => {

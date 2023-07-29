@@ -1039,4 +1039,68 @@ var lengthOfLongestSubstring = function (s) {
   console.log(maxLength);
   return maxLength;
 };
-lengthOfLongestSubstring("abcabcbb");
+//lengthOfLongestSubstring("abcabcbb");
+//2634. Filter Elements from Array
+var filter = function (arr, fn) {
+  let array = arr.filter((item, index) => {
+    return fn(item, index);
+  });
+  console.log(array);
+  return array;
+};
+
+// filter([3, 2, 3], function returnFirst(n, i) {
+//   return i === 0;
+// });
+
+//Given an integer array arr and a mapping function fn, return a new array with a transformation applied to each element.
+
+//You must do this by modifying the
+// input array in-place with O(1) extra memory.
+var reverseString = function (s) {
+  let j = 0;
+  console.log(Math.ceil(s.length / 2));
+  for (let index = s.length - 1; index >= Math.ceil(s.length / 2); index--) {
+    let temp = s[index];
+    s[index] = s[j];
+    s[j] = temp;
+    j++;
+  }
+  return s;
+};
+
+//console.log(reverseString(["h", "e", "l", "l", "o"]));
+//Given a string s, reverse only all the vowels in the string
+// and return it.
+var reverseVowels = function (s) {
+  //'a', 'e', 'i', 'o'
+  let map = { a: true, e: true, i: true, o: true };
+  s = s.split("");
+  let j = s.length - 1;
+  let index = 0;
+  while (j > index) {
+    if (!map[s[index].toLowerCase()] && !map[s[j].toLowerCase()]) {
+      j--;
+      index++;
+      continue;
+    }
+    if (map[s[index].toLowerCase()] && !map[s[j].toLowerCase()]) {
+      j--;
+      continue;
+    }
+    if (!map[s[index].toLowerCase()] && map[s[j].toLowerCase()]) {
+      index++;
+      continue;
+    }
+    if (map[s[index].toLowerCase()] && map[s[j].toLowerCase()]) {
+      let temp = s[index];
+      console.log(s[j]);
+      s[index] = s[j];
+      s[j] = temp;
+      index++;
+      j--;
+    }
+  }
+  return s.join("");
+};
+console.log(reverseVowels("hello"));
