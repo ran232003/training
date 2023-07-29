@@ -21,7 +21,8 @@ const signup = async (req, res, next) => {
       expiresIn: "1d",
     });
     res.status(201);
-    res.setHeader("Set-Cookie", token);
+    res.cookie("Auth_Cookie", token);
+    // res.setHeader("Set-Cookie", token);
     return res.json({ status: "ok", user: user });
   } catch (error) {
     console.log(error);

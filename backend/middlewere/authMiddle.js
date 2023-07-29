@@ -19,8 +19,8 @@ const userValidateSchema = async (req, res, next) => {
   }
 };
 const verifyToken = async (req, res, next) => {
-  console.log(req.headers.cookie);
-  let token = req.headers.cookie;
+  console.log(req.cookies.Auth_Cookie);
+  let token = req.cookies.Auth_Cookie;
   try {
     const decodedToken = jwt.verify(token, "my-secret");
     console.log(decodedToken);

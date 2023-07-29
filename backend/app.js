@@ -8,6 +8,8 @@ const mainRouter = require("./routes/routes");
 let { setRecords } = require("./listen");
 let person = require("./models/person");
 let company = require("./models/company");
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
 // db.execute("select * from testtable")
 //   .then((res) => {
 //     console.log("res", res);
@@ -31,8 +33,11 @@ const cors = require("cors");
 const Person = require("./models/person");
 const mongoose = require("mongoose");
 const MyError = require("./models/MyError");
-
-app.use(cors());
+const corsOptions = {
+  origin: "http://localhost:1761", // Replace with your React app's domain
+  credentials: true,
+};
+app.use(cors(corsOptions));
 mongoose.connect(
   "mongodb+srv://ranfa:232003@cluster0.d2yn9.mongodb.net/Weather?retryWrites=true&w=majority"
 );

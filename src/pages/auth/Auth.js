@@ -6,9 +6,12 @@ import * as Yup from "yup";
 import { apiCall } from "./apiCall";
 import { authSignUp } from "../weather/urls";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store/authUserSlice";
 
 const Auth = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const initialValues = { email: "", password: "" };
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -22,8 +25,11 @@ const Auth = () => {
       .max(20, "Max number of chars is 20"),
   });
   const handleSubmit = async (values, errors) => {
-    const data = await apiCall("GET", authSignUp, values);
+    const data = await apiCall("POST", authSignUp, values);
+    console.log(data);
     if (data.status === "ok") {
+      console.log("nav");
+      dispatch(authAction.setUser(data.user));
       navigate("/authHomePage");
     } else {
       console.log("error");
