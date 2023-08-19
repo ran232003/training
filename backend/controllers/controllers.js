@@ -1,9 +1,10 @@
 const Ajv = require("ajv").default;
-
+const path = require("path");
 const Job = require("../models/jobs-schema");
 const Weather = require("../models/weather-schema");
 const schema_user = require("../schema/jsonSchema.json");
 const schema_job = require("../schema/jobsSchema.json");
+const fs = require("fs");
 
 const weatherSchema = require("../schema/weatherSchema.json");
 const ajv = new Ajv();
@@ -105,6 +106,53 @@ const removeFavorites = async (req, res, next) => {
     return res.json({ status: "fail" });
   }
 };
+const uploadFile = async (req, res, next) => {
+  try {
+    console.log(req.files, req.file, "files");
+    return res.json({ status: "ok" });
+  } catch (error) {
+    return res.json({ status: "fail" });
+  }
+};
+const getFilesNames = async (req, res, next) => {
+  try {
+    const files = [];
+    // const folderPath = path.join(__dirname, "controllers"); // Replace 'myfolder' with your folder name
+    //console.log(folderPath, "downloadFile");
+
+    fs.readdirSync("./uploads/files").forEach((file) => {
+      console.log(file);
+      files.push(file);
+    });
+    return res.json({ status: "ok", files });
+  } catch (error) {
+    return res.json({ status: "fail" });
+  }
+};
+const downloadFile = async (req, res, next) => {
+  console.log("download files", req.params);
+
+  try {
+    let fileName = req.params.fileName;
+    let filePath = "./uploads/files/" + fileName;
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
+        return res.status(404).send("File not found");
+      }
+
+      // Set the appropriate headers for download
+      res.setHeader("Content-Disposition", `attachment; filename=${fileName}`);
+      res.setHeader("Content-Type", "application/octet-stream");
+
+      // Stream the file to the response
+      const fileStream = fs.createReadStream(filePath);
+      fileStream.pipe(res); // This pipes the content of the file to the response stream
+    });
+    // return res.json({ status: "ok" });
+  } catch (error) {
+    return res.json({ status: "fail" });
+  }
+};
 module.exports = {
   validateSchema,
   removeFavorites,
@@ -112,4 +160,7 @@ module.exports = {
   addFavorite,
   mongoAddingDocs,
   mongoUpateArray,
+  uploadFile,
+  getFilesNames,
+  downloadFile,
 };

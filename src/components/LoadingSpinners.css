@@ -8,3 +8,24 @@
   margin-top: -50px;
   background-size: 100%;
 }
+.custom-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  text-align: center;
+  z-index: 1000;
+  font-size: 16px;
+  transition: bottom 0.5s ease-in-out;
+}
+
+.success {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.error {
+  background-color: #d9534f;
+  color: white;
+}

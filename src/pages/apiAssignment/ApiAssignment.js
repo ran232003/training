@@ -32,6 +32,7 @@ const ApiAssignment = () => {
   };
 
   const changePage = async (newNum) => {
+    setApiImageData([]);
     dispatch(loadingAction.toggleLoading(true));
     if (newNum < 1) {
       newNum = 8;

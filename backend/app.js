@@ -33,8 +33,9 @@ const cors = require("cors");
 const Person = require("./models/person");
 const mongoose = require("mongoose");
 const MyError = require("./models/MyError");
+app.use("/uploads/files", express.static(__dirname + "/uploads/files"));
 const corsOptions = {
-  origin: "http://localhost:1761", // Replace with your React app's domain
+  origin: "http://localhost:3000", // Replace with your React app's domain
   credentials: true,
 };
 app.use(cors(corsOptions));

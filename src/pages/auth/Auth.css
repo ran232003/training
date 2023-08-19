@@ -1,9 +1,9 @@
 .main {
   display: flex;
   justify-content: center;
-  border: gray solid 5px;
   align-items: center;
   height: 100vh;
+  flex-direction: column;
 }
 .myForm {
   border-radius: 6px;
@@ -21,4 +21,24 @@
 }
 .error-message {
   color: #ff6565;
+}
+.center-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Set the height of the container to fill the viewport vertically */
+}
+.forgot-password-form,
+.forgot-password-email-sent {
+  border: 1px solid #ccc;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.forgot-password-form {
+  max-width: 400px;
+}
+
+.forgot-password-email-sent {
+  text-align: center;
 }

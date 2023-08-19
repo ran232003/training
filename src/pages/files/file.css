@@ -1,0 +1,19 @@
+.inputs {
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  background: white;
+  margin-bottom: 10px;
+  width: 40%;
+}
+:hover.hoverDelete {
+  cursor: pointer;
+}
+.list-item {
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.list-item:hover {
+  background-color: #f0f0f0; /* Change this to the desired hover background color */
+}
