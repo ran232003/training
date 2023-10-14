@@ -1,0 +1,57 @@
+.mainTodoList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.input {
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+}
+.assignments {
+  margin-top: 40px;
+  display: flex;
+  /* border: black solid 2px; */
+  width: 70%;
+  height: 70vh;
+  justify-content: space-around;
+}
+.topic {
+  height: 40px;
+  width: 200px;
+  max-width: 200px;
+  background: rgb(186, 208, 234);
+  padding: 10px;
+  border-radius: 2px;
+  text-align: left;
+  display: flex;
+}
+.taskNumbers {
+  margin-left: 10px;
+  height: 23px;
+  width: 23px;
+  border-radius: 50%;
+  background-color: white;
+  text-align: center;
+}
+.inProgress {
+  background-color: plum;
+}
+.closed {
+  background-color: greenyellow;
+}
+.mainTaskItem {
+  margin-top: 10px;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cancelIcon {
+  cursor: pointer;
+}

@@ -1,0 +1,64 @@
+:root {
+  --prime: #d81e5b;
+  --second: #8c38ff;
+  --dark: #131a26;
+  --light: #eee;
+}
+.mainCalc {
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+}
+.calculator {
+  background-color: #fff;
+  width: 100%;
+  max-width: 400px;
+  align-items: center;
+  border-radius: 16px;
+  box-shadow: 0px 2px 64px rgba(0, 0, 0, 0.2);
+}
+.display {
+  padding: 16px;
+  text-align: right;
+  background-color: var(--dark);
+  color: var(--light);
+  font-size: 24px;
+  font-weight: 300; /*boldness of the font*/
+}
+
+.display span {
+  font-size: 14px;
+  color: #888;
+  margin-right: 5px;
+}
+button {
+  appearance: none; /*no style*/
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 16px;
+  cursor: pointer;
+  transition: 0.4s; /*adding animation*/
+}
+button:hover {
+  opacity: 0.9; /*make them light*/
+}
+.operators {
+  display: flex;
+}
+.operators button {
+  flex: 1 1 0%; /*equal size across the line*/
+  background-color: var(--prime);
+  font-weight: 700;
+}
+.digits {
+  display: flex;
+  flex-wrap: wrap;
+}
+.digits button {
+  flex: 1 1 33.333%;
+  background-color: var(--dark);
+}

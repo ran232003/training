@@ -25,6 +25,8 @@ const {
   forgotValidationSchema,
 } = require("../middlewere/authMiddle");
 const upload = require("../middlewere/uploadFile");
+const { saveToDb, fetchAllCars } = require("../controllers/agGridControllers");
+const { checkSchema } = require("../middlewere/schemaValidation");
 const router = express.Router();
 
 router.post("/validateSchema", validateSchema);
@@ -43,5 +45,9 @@ router.post("/resetPassword", resetPassword);
 router.post("/uploadFile", upload.array("files", 10), uploadFile);
 router.get("/getFilesNames", getFilesNames);
 router.get("/downloadFile/:fileName", downloadFile);
-router.delete("/removeFavorite/:key", removeFavorites);
+router.delete("/removeFavorite/:key", removeFavorites); //
+
+router.post("/saveToDb", checkSchema("greedSchema.json"), saveToDb);
+router.get("/fetchAllCars", fetchAllCars);
+
 module.exports = router;

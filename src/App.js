@@ -24,6 +24,9 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import ToastMessage from "./components/ToastMessage";
 import Download from "./pages/files/Download";
 import Upload from "./pages/files/Upload";
+import GoogleMapPage from "./pages/googleMaps/GoogleMap";
+import Calculator from "./pages/calc/Calculator";
+import ListHomepage from "./pages/todoList/ListHomepage";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +48,7 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path="/table" element={<MainTable />} />
+        <Route path="/google" element={<GoogleMapPage />} />
         <Route path="/form" element={<MainForm />} />
         <Route path="/apiAssignment" element={<ApiAssignment />} />
         <Route path="/NestedDropDown" element={<NestedDropDown />} />
@@ -54,6 +58,8 @@ function App() {
         <Route path="/upload" element={<Upload />} />
         <Route path="/reset/:userToken" element={<ResetPassword />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/calculator" element={<Calculator />} />
+        <Route path="/todoList" element={<ListHomepage />} />
         <Route element={<PrivateAuth />}>
           <Route path="/auth/:status" element={<Auth />} />
         </Route>

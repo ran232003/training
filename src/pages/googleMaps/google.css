@@ -1,0 +1,77 @@
+.mainGoogle {
+  display: flex;
+  height: 100vh;
+}
+.searchBox {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  background: white;
+  height: fit-content;
+}
+.mainMenu {
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.menuInputText {
+  margin-bottom: 0; /* Remove the bottom margin to reduce space */
+  /* Allow inputs to grow and fill available space */
+  height: 40px; /* Set a fixed height for the inputs */
+  margin-left: 10px;
+  flex: 1;
+}
+.inputs2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* border: solid 5px green; */
+  height: 100%;
+  padding: 10px;
+  /* justify-content: space-between; */
+  align-items: flex-start; /* Align items to the top */
+}
+.menuInputButton {
+  margin-left: 10px;
+  height: 10%; /* Set the same height for the button */
+}
+.clear-button {
+  height: 40px;
+  padding: 0 15px;
+  border: solid 1px rgb(236, 235, 235);
+  background: rgb(230, 228, 228);
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 5px;
+  align-self: center; /* Align vertically in the middle */
+}
+.input-field {
+  /* Make sure the input field inside Autocomplete takes full height */
+  padding: 6px;
+}
+.secondRow {
+  margin-top: 10px;
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+.input-field2 {
+  height: 40px;
+  margin-right: 10px; /* Add some spacing between input fields */
+}
+
+.compass-icon {
+  font-size: 32px;
+  cursor: pointer;
+  color: #007bff; /* Set the desired color */
+}
+.MuiInputBase-input {
+  height: 18px !important;
+}

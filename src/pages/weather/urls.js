@@ -19,3 +19,5 @@ export const resetPasswordURL = "http://localhost:5000/main/resetPassword";
 export const uploadFileURL = "http://localhost:5000/main/uploadFile";
 export const getFilesNames = "http://localhost:5000/main/getFilesNames";
 export const downloadFileURL = "http://localhost:5000/main/downloadFile";
+export const saveToDbURL = "http://localhost:5000/main/saveToDb";
+export const fetchAllCarsURL = "http://localhost:5000/main/fetchAllCars";
