@@ -3,12 +3,16 @@ const app = express();
 const Ajv = require("ajv").default;
 //const db = require("./util/db");
 const sequelize = require("./util/db");
+const graphqlSchema = require("./graphql/schema");
+const graphqlResolvers = require("./graphql/resolvers");
+const { graphqlHTTP } = require("express-graphql");
 var csv = require("csvtojson");
 const mainRouter = require("./routes/routes");
 let { setRecords } = require("./listen");
 let person = require("./models/person");
 let company = require("./models/company");
 const cookieParser = require("cookie-parser");
+
 app.use(cookieParser());
 // db.execute("select * from testtable")
 //   .then((res) => {
@@ -33,14 +37,28 @@ const cors = require("cors");
 const Person = require("./models/person");
 const mongoose = require("mongoose");
 const MyError = require("./models/MyError");
+const { checkValidation } = require("./helperFunc");
 app.use("/uploads/files", express.static(__dirname + "/uploads/files"));
 const corsOptions = {
   origin: "http://localhost:3000", // Replace with your React app's domain
   credentials: true,
 };
+app.use(express.json());
 app.use(cors(corsOptions));
-mongoose.connect(
-  "mongodb+srv://ranfa:232003@cluster0.d2yn9.mongodb.net/Weather?retryWrites=true&w=majority"
+// mongoose.connect(
+//   "mongodb+srv://ranfa:232003@cluster0.d2yn9.mongodb.net/Weather?retryWrites=true&w=majority"
+// );
+mongoose.connect("mongodb://localhost:27017/training", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolvers,
+    graphiql: true,
+  })
 );
 app.use("/main", mainRouter);
 
@@ -70,7 +88,7 @@ app.use(function (error, req, res, next) {
 sequelize
   .sync()
   .then((res) => {
-    //console.log(res);
+    console.log("listening ", port);
     app.listen(port);
   })
   .catch((err) => {

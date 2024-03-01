@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { weatherAction } from "./store/weatherSlice";
 import { getFavoritesWeather } from "./pages/weather/urls";
 import { apiCall } from "./pages/weather/weatherAip";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Auth from "./pages/auth/Auth";
 import AuthHomePage from "./pages/auth/AuthHomePage";
 import PrivateRoutes from "./components/PrivateRoutes";
@@ -27,6 +27,9 @@ import Upload from "./pages/files/Upload";
 import GoogleMapPage from "./pages/googleMaps/GoogleMap";
 import Calculator from "./pages/calc/Calculator";
 import ListHomepage from "./pages/todoList/ListHomepage";
+import VideoComponent from "./Video/VideoComponent";
+import FormQuestions from "./pages/form_question/FormQuestions";
+import MainForm2 from "./pages/form_question/MainForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,6 +51,8 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path="/table" element={<MainTable />} />
+        <Route path="/FormQuestions" element={<MainForm2 />} />
+
         <Route path="/google" element={<GoogleMapPage />} />
         <Route path="/form" element={<MainForm />} />
         <Route path="/apiAssignment" element={<ApiAssignment />} />
@@ -60,6 +65,7 @@ function App() {
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/todoList" element={<ListHomepage />} />
+        <Route path="/video" element={<VideoComponent />} />
         <Route element={<PrivateAuth />}>
           <Route path="/auth/:status" element={<Auth />} />
         </Route>

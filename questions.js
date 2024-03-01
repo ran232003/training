@@ -1103,4 +1103,19 @@ var reverseVowels = function (s) {
   }
   return s.join("");
 };
-console.log(reverseVowels("hello"));
+//console.log(reverseVowels("hello"));
+
+//compering 2 string char by char
+
+function compareStrings(str1, str2) {
+  if (str1.length !== str2.length) {
+    return false;
+  }
+  for (let i = 0; i < str1.length; i++) {
+    if (!str1.toUpperCase() === str2.toUpperCase()) {
+      return false;
+    }
+  }
+  return true;
+}
+console.log(compareStrings("abc", "abCs"));

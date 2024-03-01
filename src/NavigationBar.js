@@ -72,6 +72,12 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/todoList">
               ToDo List
             </Nav.Link>
+            <Nav.Link as={Link} to="/video">
+              Video
+            </Nav.Link>
+            <Nav.Link as={Link} to="/FormQuestions">
+              FormQuestions
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>
