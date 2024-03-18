@@ -102,6 +102,7 @@ const testScope = () => {
 // });
 //testScope();
 
+//deep copy and shalow
 const deppShalowObj = () => {
   let a = { name: "ran", age: 23 };
   let obj = { lastName: "farjun", person: a };
@@ -780,4 +781,191 @@ const setTimeOutIssue = () => {
     delayedLog(index, 1);
   }
 };
-setTimeOutIssue();
+//setTimeOutIssue();
+//make this works:console.log(mul(2)(3)(4))=>24;
+
+const mul = (x) => {
+  return (y) => {
+    return (z) => {
+      return x * y * z;
+    };
+  };
+};
+//console.log(mul(2)(3)(4));
+//make this works:
+const createBase = (base) => {
+  return (add) => {
+    return add + base;
+  };
+};
+const addSix = createBase(6);
+// console.log(addSix(10));
+
+//prototype use
+
+const checkPrototype = () => {
+  class Person {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+  }
+  let p1 = new Person("ran", 34);
+  let p2 = new Person("ran2", 234);
+  Person.prototype.checkName = function () {
+    console.log("Hello, my name is " + this.name);
+  };
+  p1.checkName();
+  p2.checkName();
+  console.log(p1);
+};
+//checkPrototype();
+
+//call apply bind
+
+const callApplyBind = () => {
+  const obj = { name: "ran" };
+  let f1 = function (age, home) {
+    console.log(this.name, age, home);
+  };
+  //call
+  f1(); //undifiend
+  f1.call(obj, 15, "Kramim"); //ran 15 Kramim
+  f1.apply(obj, [15, "Kramim"]);
+  let f = f1.bind(obj);
+  f(15, "Kramim");
+};
+//callApplyBind();
+
+const mapObject = () => {
+  const obj = {};
+  const map = new Map();
+  let obj2 = { test: "test1" };
+  let arr = [1, 2, 3];
+  map.set(obj2, "obj2");
+  map.set(arr, "arr");
+  console.log(map); //Map(2) { { test: 'test1' } => 'obj2', [ 1, 2, 3 ] => 'arr' }
+  obj[obj2] = "obj2";
+  obj[arr] = "arr";
+  console.log(obj); //{ '[object Object]': 'obj2', '1,2,3': 'arr' }
+};
+//mapObject();
+
+//how to do singleton in js
+
+const createSingelton = () => {
+  class MySingletonClass {
+    static instance = null; //this will check if the class was created
+    constructor() {
+      if (MySingletonClass.instance) {
+        //instance is no null so object was created so throw exception
+        throw new Error("Object was already init");
+      }
+      this.name = "single";
+      this.age = 20;
+      MySingletonClass.instance = this;
+    }
+    static getInstance() {
+      if (MySingletonClass.instance) {
+        return MySingletonClass.instance;
+      }
+      return new MySingletonClass();
+    }
+  }
+  try {
+    const obj = MySingletonClass.getInstance();
+    const obj2 = MySingletonClass.getInstance();
+    console.log(obj, obj2);
+
+    const obj3 = new MySingletonClass(); //error
+  } catch (error) {
+    console.log(error);
+  }
+};
+//createSingelton();
+//Find Subarray with given sum
+const subArraySum = (array, sum) => {
+  for (let index = 0; index < array.length; index++) {
+    let tempSum = array[index];
+    let j = index + 1;
+    while (j < array.length) {
+      if (tempSum + array[j] < sum) {
+        tempSum = tempSum + array[j];
+        j++;
+      } else if (tempSum + array[j] === sum) {
+        return { start: index, end: j };
+      } else {
+        break;
+      }
+    }
+  }
+  return false;
+};
+//console.log(subArraySum([1, 2, 3, 4, 5], 5));
+
+const fidnDuplicate = (array) => {
+  let set = new Set();
+  for (let index = 0; index < array.length; index++) {
+    if (!set.has(array[index])) {
+      set.add(array[index]);
+    } else {
+      return array[index];
+    }
+  }
+};
+//console.log(fidnDuplicate([1, 4, 2, 9, 2]));
+//find duplicate without memory
+
+const findWithout = (array) => {
+  array = array.sort((a, b) => {
+    return a - b;
+  });
+
+  for (let index = 0; index < array.length - 1; index++) {
+    if (array[index] === array[index + 1]) {
+      return array[index];
+    }
+  }
+};
+
+//console.log(findWithout([1, 4, 2, 41, 9]));
+
+function aa() {
+  console.log(this);
+}
+
+//this:
+
+// function f() {
+//   console.log(this); //global
+// }
+
+// console.log(this); //module.export
+// const obj = {
+//   title: "party",
+//   names: ["ran", "ran2"],
+//   checkName() {
+//     this.names.map(function (item, index) {
+//       console.log(this.title); //undefined inside regular function this is global
+//       return item;
+//     });
+//   },
+//   checkName2() {
+//     this.names.map((item, index) => {
+//       console.log(this.title); //party, in arrow function this wiil be the this from the outside object
+//       return item;
+//     });
+//   },
+//   checkName3() {
+//     let that = this;
+//     this.names.map(function (item, index) {
+//       console.log(that.title); //party, we are saving the this before the function and then we will use it
+//       return item;
+//     });
+//   },
+//   checkName4: () => {
+//     console.log(this);
+//   },
+// };
+// module.exports.test = "testt";
+// obj.checkName4.call(obj);
