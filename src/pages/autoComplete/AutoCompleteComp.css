@@ -1,0 +1,38 @@
+.autoCompleteMain {
+  display: flex;
+  flex-direction: column; /* Organize children in a column */
+  align-items: center; /* Center children horizontally */
+  height: 100vh;
+}
+.AutocompleteInput {
+  margin-top: 20px;
+  margin-bottom: 100px;
+}
+.pokemon-types {
+  display: flex;
+  justify-content: space-around;
+}
+.tpye-div {
+  padding: 5px;
+  border-radius: 10px;
+}
+.main-types {
+  display: flex;
+}
+.pok-icon {
+  width: 20px;
+  margin-right: 10px;
+}
+.ability-div {
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  background-color: aqua;
+}
+.stat-value {
+}
+.stat-title {
+  font-size: large;
+  font-weight: bold;
+  margin-right: 10px;
+}

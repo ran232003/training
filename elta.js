@@ -772,13 +772,16 @@ const moveZero = (array) => {
 //console.log(moveZero([1, 2, 0, 0, 2, 4, 6, 0, 1]));
 //fixing loop var issue
 const setTimeOutIssue = () => {
-  function delayedLog(message, delay) {
+  function delayedLog(index, delay) {
     setTimeout(() => {
-      console.log(message);
+      console.log(index);
     }, delay);
   }
+  // function delayedLog2(index, delay) {
+  //   console.log(index);
+  // }
   for (var index = 0; index < 3; index++) {
-    delayedLog(index, 1);
+    delayedLog(index, 1); //the function will save the var value
   }
 };
 //setTimeOutIssue();
@@ -969,3 +972,251 @@ function aa() {
 // };
 // module.exports.test = "testt";
 // obj.checkName4.call(obj);
+
+// const fn = () => {
+//   console.log("middle");
+//   setTimeout(() => {
+//     console.log("setTimeout");
+//   }, 0);
+//   console.log("after");
+// };
+// const checkCallback = (fn) => {
+//   console.log("hi");
+//   fn();
+//   console.log("by");
+// };
+// checkCallback(fn);
+
+//promise:
+
+const checkPromise = () => {
+  const promiseTest = new Promise((resolve, reject) => {
+    const num = Math.random();
+    console.log("num is ", num);
+    if (num >= 0.5) {
+      resolve("Promise is fulfilled! " + num);
+    } else {
+      reject("Promise failed! " + num);
+    }
+  });
+
+  //value will be Promise is fulfilled! or Promise failed!
+  function handleResolve(value) {
+    console.log("handleResolve", value);
+  }
+
+  function handleReject(reason) {
+    console.error("handleReject", reason);
+  }
+
+  promiseTest.then(handleResolve, handleReject);
+  // Promise is fulfilled!
+  // or
+  // Promise failed!
+  console.log("test");
+  //order of logs:
+  //1. num is
+  //2. test
+  //3. handleReject or handleResolve
+  //when you do then, this function is trigger: const num = Math.random().....
+  //after that, when we get to resolve or reject the function is done
+  //now we will finish the original function checkPromise
+  //and the end we will activate callback handleResolve or handleReject
+};
+//checkPromise();
+const checkPromise2 = () => {
+  const myPromise = () => {
+    return new Promise((resolve, reject) => {
+      const num = Math.random();
+      console.log("num is ", num);
+      if (num >= 0.5) {
+        resolve("Promise is fulfilled! " + num);
+      } else {
+        reject("Promise failed! " + num);
+      }
+    });
+  };
+  myPromise()
+    .then((val) => {
+      console.log("resolve val = ", val);
+    })
+    .catch((val) => {
+      console.log("reject val = ", val);
+    });
+};
+//checkPromise2();
+
+const checkPromiseRace = () => {
+  const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("yes");
+    }, 500);
+  });
+
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("yes fast");
+    }, 100);
+  });
+
+  Promise.race([promise1, promise2]).then((value) => {
+    console.log(value);
+    // Both resolve, but promise2 is faster
+  });
+};
+//checkPromiseRace();
+
+const checkPromiseAll = () => {
+  const promise1 = Promise.resolve(3);
+  const promise2 = 42;
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(reject, 100, "foo");
+  });
+
+  Promise.all([promise1, promise2, promise3])
+    .then((values) => {
+      console.log(values);
+    })
+    .catch(() => {
+      console.log("reject");
+    });
+};
+//checkPromiseAll();
+
+const checkPromiseAllSettled = () => {
+  const promise1 = Promise.resolve(3);
+  const promise2 = new Promise((resolve, reject) =>
+    setTimeout(reject, 100, "foo")
+  );
+  const promises = [promise1, promise2];
+
+  Promise.allSettled(promises).then((results) =>
+    results.forEach((result) => console.log(result.status))
+  );
+};
+
+const checkPromiseAny = () => {
+  const promise1 = Promise.reject(0);
+  const promise2 = new Promise((resolve) => setTimeout(resolve, 100, "quick"));
+  const promise3 = new Promise((resolve) => setTimeout(resolve, 500, "slow"));
+
+  const promises = [promise1, promise2, promise3];
+
+  Promise.any(promises).then((value) => console.log(value)); //quick
+};
+
+//Q1: Write code to get an array of names from given array of users
+//Result
+// ['Jack', 'John', 'Mike']
+const arrayOfUsers = () => {
+  ///Q1: Write code to get an array of names from given array of users
+  const users = [
+    { id: 1, name: "Jack", isActive: true, age: 22 },
+    { id: 2, name: "John", isActive: true, age: 23 },
+    { id: 3, name: "Mike", isActive: false, age: 1 },
+  ];
+  let array = users.map((user) => {
+    return user.name;
+  });
+  console.log(array);
+  //get only active users
+  let activeArray = users
+    .filter((user) => {
+      return user.isActive;
+    })
+    .map((user) => {
+      return user.name;
+    });
+  console.log(activeArray);
+  //sort by age
+  let usersArraySortByAge = users
+    .sort((a, b) => {
+      if (a.age < b.age) {
+        return -1; // a should come before b
+      } else if (a.age > b.age) {
+        return 1; // a should come after b
+      } else {
+        return 0; // a and b are equal in terms of 'name'
+      }
+    })
+    .map((user) => {
+      return user.name;
+    });
+  console.log(usersArraySortByAge);
+
+  //different approch
+};
+//arrayOfUsers();
+
+const nullUndefined = () => {
+  let var1;
+  console.log(var1); //undefined
+  console.log(typeof var1); //undefined
+
+  let var2 = null;
+  console.log(var2); //null
+  console.log(typeof var2); //object
+  console.log(var2 == var1);
+  console.log(var2 === var1);
+};
+//nullUndefined();
+
+const checkHoisting = () => {
+  foo2 = 3;
+  console.log(foo2);
+  var foo2;
+  //will look like so:var foo2;, foo2 = 3;, console.log(foo2);
+};
+//checkHoisting();
+
+// Closures
+// Q1: Create a counter function which has increment and getValue
+// functionality
+
+const counterClosure = () => {
+  let x = 0;
+  return {
+    getValue: () => {
+      return x;
+    },
+    increment: () => {
+      x = x + 1;
+    },
+  };
+};
+// let privateCounter = counterClosure();
+// console.log(privateCounter.getValue());
+// privateCounter.increment();
+// console.log(privateCounter.getValue());
+
+//check user name by name
+
+const checkUserName = (name) => {
+  const users = [
+    { id: 1, name: "Jack", isActive: true, age: 22 },
+    { id: 2, name: "John", isActive: true, age: 23 },
+    { id: 3, name: "Mike", isActive: false, age: 1 },
+  ];
+  //check if username exist John:
+  const checkUserName = users.some((user) => {
+    return user.name === name;
+  });
+  console.log(checkUserName); //true/false
+  //another method
+  const checkUserName2 = users.find((user) => {
+    return user.name === name;
+  });
+  console.log(checkUserName2, Boolean(checkUserName2)); //the element {....}/OR UNDEFIEND no boolean, we can use Bool CONSTRUCTOR
+
+  const checkUserName3 = users.findIndex((user) => {
+    return user.name === name;
+  });
+  console.log(checkUserName3); // here we will get the index or -1 if no result
+};
+//checkUserName("Jack");
+
+const removeAllDuplicate = (array) => {
+  console.log(Array.from(new Set(array)));
+  return Array.from(new Set(array));
+};
+removeAllDuplicate([1, 2, 3, 3, 4, 5, 5]);

@@ -5,9 +5,7 @@ export const apiCall = async (method, url, payload) => {
     switch (method) {
       case "GET":
         console.log(url, payload);
-        response = await fetch(url, {
-          credentials: "include",
-        });
+        response = await fetch(url, {});
         break;
       case "POST":
         console.log(url, payload, method);

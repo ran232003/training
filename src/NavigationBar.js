@@ -78,6 +78,9 @@ function NavigationBar() {
             <Nav.Link as={Link} to="/FormQuestions">
               FormQuestions
             </Nav.Link>
+            <Nav.Link as={Link} to="/autoComplete">
+              AutoCompleteAssignment
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>

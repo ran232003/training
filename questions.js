@@ -427,6 +427,8 @@ Given an array of strings words, return the words that can be typed using letter
 */
 function findOneRowWords(wordList) {
   // Implement this
+  //idea: put every letter in an object with the line in the keyBoard
+  //then check the word, if every letter in the word has the same value in the new object
   let returnStrings = [];
   let map = {};
   for (let i = 0; i < keyboardRowList.length; i++) {

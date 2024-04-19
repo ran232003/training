@@ -30,6 +30,7 @@ import ListHomepage from "./pages/todoList/ListHomepage";
 import VideoComponent from "./Video/VideoComponent";
 import FormQuestions from "./pages/form_question/FormQuestions";
 import MainForm2 from "./pages/form_question/MainForm";
+import AutoCompleteComp from "./pages/autoComplete/AutoCompleteComp";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ function App() {
         <Route path="/calculator" element={<Calculator />} />
         <Route path="/todoList" element={<ListHomepage />} />
         <Route path="/video" element={<VideoComponent />} />
+        <Route path="/autoComplete" element={<AutoCompleteComp />} />
         <Route element={<PrivateAuth />}>
           <Route path="/auth/:status" element={<Auth />} />
         </Route>
