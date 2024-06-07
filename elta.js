@@ -1219,4 +1219,640 @@ const removeAllDuplicate = (array) => {
   console.log(Array.from(new Set(array)));
   return Array.from(new Set(array));
 };
-removeAllDuplicate([1, 2, 3, 3, 4, 5, 5]);
+//removeAllDuplicate([1, 2, 3, 3, 4, 5, 5]);
+
+//sorting array
+
+const sort1 = (array) => {
+  //sort will mutate the array, not create new array
+  return array.sort((a, b) => {
+    //if a-b is negative so a is biiger then b, so b is first
+    //if a-b is positive so a is smaller then a first
+    return a - b;
+  });
+};
+//console.log(sort1([1, 5, 3, 2]));
+const sortObjects = (array) => {
+  return array.sort((a, b) => {
+    return a.age - b.age;
+  });
+};
+// console.log(
+//   sortObjects([
+//     { age: 5, name: "bar" },
+//     { age: 55, name: "gad" },
+//     { age: 2, name: "ran" },
+//     { age: 11, name: "sar" },
+//   ])
+// );
+
+//create range func will create array
+
+const rangeArray = (start, end) => {
+  let array = [];
+  if (end < start) {
+    return [];
+  }
+  for (let index = start; index < end; index++) {
+    array.push(index);
+  }
+  return array;
+};
+//console.log(rangeArray(5, 20));
+
+const rangAarray2 = (start, end) => {
+  // Array(end-start) = length of the array 20-5 = 15
+  const a = Array(end - start);
+  //console.log(Array(end - start)); //[ <15 empty items> ]
+
+  let b = Array(end - start).keys();
+  //console.log(Array(end - start).keys()); //Object [Array Iterator] {}
+
+  let c = [...Array(end - start).keys()];
+  //console.log([...Array(end - start).keys()]); //will create an array from 0 to end-start-1.
+  //The spread operator (...) spreads out each value from the iterator (Array(end - start).keys()) into a new array.
+  //Since the iterator goes from 0 to end - start - 1 (the indices of the array), the spread operator collects these values into a new array.
+
+  //but we want to create an array from start number not from 0 so:
+  console.log(
+    [...Array(end - start).keys()].map((num) => {
+      return num + start;
+    })
+  );
+  //so the array we got before: [0-15], now we will add the start number 5 for every num in the array so [0+5,1+5,...]
+
+  return [...Array(end - start).keys()].map((num) => {
+    return num + start;
+  });
+};
+//rangAarray2(5, 20);
+//shuffle function
+//take array and change posotions for all elements
+const myShuffle = (array) => {
+  for (let index = array.length - 1; index > 0; index--) {
+    let newIndex = Math.floor(Math.random() * index);
+    let temp = array[newIndex];
+    array[newIndex] = array[index];
+    array[index] = temp;
+  }
+  return array;
+};
+//console.log(myShuffle([1, 2, 3, 4, 5]));
+
+//find number of times minimum is in the list: [1,2,5,1,3,1] => 3 times
+
+const countMin = (array) => {
+  const min = array[0];
+  const obj = new Map();
+  obj.set(array[0], 1);
+  for (let index = 1; index < array.length; index++) {
+    if (min > array[index]) {
+      min = array[index];
+    }
+    if (obj.get(array[index])) {
+      let keyTimes = obj.get(array[index]) + 1;
+      obj.set(array[index], keyTimes);
+    } else {
+      obj.set(array[index], 1);
+    }
+  }
+  return obj.get(min);
+};
+//console.log(countMin([1, 2, 5, 1, 3, 1]));
+
+const countMin2 = (array) => {
+  //get min from array
+  let min = Math.min(...array);
+  return array.filter((num) => {
+    return num === min;
+  }).length;
+};
+//console.log(countMin2([1, 2, 1, 4, 8, 1]));
+
+//this
+
+function checkThis() {
+  //console.log(this); //global obj. if it was arrow func so module.export
+  let obj = {
+    a: 0,
+    f: function () {
+      console.log(this, "ionner"); //the object
+    },
+  };
+  obj.f();
+  class Item {
+    title = "ball";
+    getItem() {
+      console.log(this);
+      let newThis = this;
+      function testThis() {
+        console.log("testThis", this, newThis); //undefined,Item { title: 'test' }
+      }
+      testThis();
+      //another solution is arrow function
+      const testThis2 = () => {
+        console.log("testThis2", this); //Item { title: 'test' }
+      };
+      testThis2();
+    }
+    setItem(name) {
+      this.title = name;
+    }
+  }
+
+  const item = new Item();
+  item.setItem("test");
+  item.getItem(); //the instance of the class. title will be test and not ball
+}
+//checkThis();
+// class Employee {
+//   constructor(name, id) {
+//     this.name = name;
+//     this.id = id;
+//   }
+// }
+
+// class Manager extends Employee {
+//   setDepartment(dep) {
+//     this.dep = dep;
+//   }
+// }
+// const manager = new Manager("asd", "asd");
+// console.log(manager);//Manager { name: 'asd', id: 'asd' }
+
+//debounce
+
+const testDebounce = () => {
+  //function to activate after timer is done
+  const saveInput = (name) => {
+    console.log("save name = ", name);
+  };
+  const debounce = (func, timeOut) => {
+    let timer;
+    return (...args) => {
+      //clearTimeout(timer) cancels the execution of the setTimeout function if it hasn't already been executed.
+      //if 2 seconds didnt pass so we will cancel setTimeOut.
+      //if 2 seconds pass so we will trigger setTimeOut
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, timeOut);
+    };
+  };
+  const change = debounce(saveInput, 2000);
+  change("1");
+  change("2");
+  change("3");
+};
+//testDebounce();
+
+//Throttling is a technique used to limit the rate at which a function is called
+
+const throttling = (func, dealy) => {
+  let value = 0;
+  let timeOut = null;
+  return () => {
+    //check timeOut Value
+    value++;
+
+    if (!timeOut) {
+      //we will run the func only if time out is again null
+      //value just to see which one is working
+      func(value);
+      timeOut = setTimeout(() => {
+        timeOut = null;
+      }, dealy);
+    }
+  };
+};
+const checkThrottling = (value) => {
+  console.log("working " + value);
+};
+
+// const myFunc = throttling(checkThrottling, 1000);
+// myFunc(); //will work: working 1
+// myFunc(); //will not work
+// setTimeout(() => {
+//   myFunc(); //will work: working 3
+// }, 1100);
+
+//parallel async array: we will do sevral async calls and will console log the results
+
+const method1 = () => {
+  const p = new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000, "p1");
+  });
+  const p2 = new Promise((resolve, reject) => {
+    //"p2": The value to be passed to the resolve function when the timeout completes.
+    setTimeout(resolve, 3000, "p2");
+  });
+  const p3 = new Promise((resolve, reject) => {
+    setTimeout(reject, 1000, "p3");
+  });
+
+  const promises = [p, p2, p3];
+  Promise.allSettled(promises).then((results) =>
+    results.forEach((result) => console.log(result.value))
+  );
+};
+//method1();
+//MAP 2 async func. 1 users 2. users status:
+//we will do 2 api call and merge the results
+const mapAsync = () => {
+  const users = [
+    { id: 1, name: "ran" },
+    { id: 2, name: "ran2" },
+    { id: 3, name: "ran3" },
+  ];
+  const userStatuses = [
+    { id: 1, status: "ok" },
+    { id: 2, status: "great" },
+    { id: 3, status: "amazing" },
+  ];
+  const p = new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000, users);
+  });
+  const p2 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 3000, userStatuses);
+  });
+
+  Promise.all([p, p2]).then((results) => {
+    //console.log(results); // will be the 2 arrays after the 2 api calls will finished
+    //const [users, userStatuses] = results;:
+    //users is assigned the value of results[0], which is the users array.
+    //userStatuses is assigned the value of results[1], which is the userStatuses array.
+    const [usersFromApi, userStatusesFromApi] = results;
+    //merge the results
+    const mergeResults = usersFromApi.map((user) => {
+      const findStatus = userStatusesFromApi.find((userStatus) => {
+        return userStatus.id === user.id;
+      });
+      return { ...user, status: findStatus.status };
+    });
+    console.log(mergeResults);
+  });
+};
+//mapAsync();
+
+const mapAsync2 = async () => {
+  //here i will do it with async await
+  const users = [
+    { id: 1, name: "ran" },
+    { id: 2, name: "ran2" },
+    { id: 3, name: "ran3" },
+  ];
+  const userStatuses = [
+    { id: 1, status: "ok" },
+    { id: 2, status: "great" },
+    { id: 3, status: "amazing" },
+  ];
+  const p = new Promise((resolve, reject) => {
+    setTimeout(resolve, 1000, users);
+  });
+  const p2 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 3000, userStatuses);
+  });
+
+  const results = await Promise.all([p, p2]);
+  //console.log(results);// here we will get the array with the 2 results
+  const [usersFromApi, userStatusesFromApi] = results;
+  //merge the results
+  const mergeResults = usersFromApi.map((user) => {
+    const findStatus = userStatusesFromApi.find((userStatus) => {
+      return userStatus.id === user.id;
+    });
+    return { ...user, status: findStatus.status };
+  });
+  console.log(mergeResults);
+};
+//mapAsync2();
+
+//try this on javaScript online: Throttling
+// const fetch = require("node-fetch");
+// const main = async()=>{
+// const fetchAndRetry = (attempts,delay)=>{
+//   return async()=>{
+//     for (let i = 0; i < attempts; i++) {
+//       try{
+//         console.log("check")
+//         // throw new Error("test");
+//         const res =await fetch("https:2//swapi.dev/api/people/?page=2")
+//         const data = await res.json();
+//         return data
+//       }catch(e){
+//          if (i < attempts - 1) {
+//           console.log(`Retrying in ${delay} milliseconds...`);
+//           await new Promise(resolve => setTimeout(resolve, delay));
+//         }else{
+//                     console.log(`else`);
+
+//           return "error"
+//         }
+//       }
+
+//     }
+//   }
+// }
+// const f = fetchAndRetry(3,1000)
+// const data = await f();
+// console.log(data)
+// }
+
+// main()
+//shallow comparision
+
+const shallowComparision = (obj1, obj2) => {
+  //checking all tyes
+  if (typeof obj1 !== typeof obj2) {
+    return false;
+  }
+
+  if (Array.isArray(obj1) && obj1.length === obj2.length) {
+    //array
+    return obj1.every((element, index) => {
+      return element === obj2[index];
+    });
+  }
+  if (typeof obj1 === "object" && obj1 !== null) {
+    if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+      return false;
+    }
+    for (const property in obj1) {
+      if (obj1[property] !== obj2[property]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  //checking primetive types
+  if (obj1 === obj2) {
+    return true;
+  }
+  return false;
+};
+// console.log(shallowComparision({ a: "1", b: 2, c: 3 }, { a: "1", b: 2, c: 3 }));
+// console.log(shallowComparision([1, 2, 3, 4, 2], [1, 2, 3, 4]));
+
+const deepComparison = (obj1, obj2) => {
+  //checking all tyes
+  if (typeof obj1 !== typeof obj2) {
+    return false;
+  }
+
+  if (Array.isArray(obj1) && obj1.length === obj2.length) {
+    //array
+    return obj1.every((element, index) => {
+      //recursive call
+      return deepComparison(element, obj2[index]);
+    });
+  }
+  if (typeof obj1 === "object" && obj1 !== null) {
+    if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+      return false;
+    }
+    return Object.keys(obj1).every((key) => {
+      return deepComparison(obj1[key], obj2[key]);
+    });
+  }
+  //checking primetive types
+  if (obj1 === obj2) {
+    return true;
+  }
+  return false;
+};
+//console.log(deepComparison([1, 2, 3, 4, { a: 2 }], [1, 2, 3, 4, { a: 2 }]));
+// console.log(
+//   deepComparison(
+//     { a: "1", b: 2, c: 3, d: { e: 5 } },
+//     { a: "1", b: 2, c: 3, d: { e: 5 } }
+//   )
+// );
+//count the vowels a, e, i, o, u in a sentence
+
+const countVowels = (sentence) => {
+  const map = { a: 0, e: 0, i: 0, o: 0, u: 0 };
+  for (let index = 0; index < sentence.length; index++) {
+    if (sentence[index] in map) {
+      map[sentence[index]]++;
+    }
+  }
+  return map;
+};
+//console.log(countVowels("hello my name is ran"));
+
+//capitalize correctly
+//examples: hi my name => Hi My Name. hELLo THERe=> Hello There
+
+const capitalize = (words) => {
+  let sentence = words.toLowerCase().split("");
+  console.log(sentence);
+  for (let index = 0; index < sentence.length; index++) {
+    if (index === 0) {
+      console.log(sentence[index].toUpperCase());
+      sentence[index] = sentence[index].toUpperCase();
+    } else if (sentence[index - 1] === " ") {
+      sentence[index] = sentence[index].toUpperCase();
+    }
+  }
+  console.log(sentence.join(""));
+};
+//capitalize("hI thERE MOnsters");
+
+//convert 12 hours time format to 24
+
+const timeFormatChange = (time) => {
+  let checkCase = time.includes("AM");
+  let arr = time.split(":");
+  console.log(arr);
+  //AM CASE
+  if (checkCase) {
+    //just change 12
+    if (arr[0] === "12") {
+      arr[0] = "00";
+    }
+  } else {
+    if (arr[0] !== "12") {
+      let num = parseInt(arr[0]);
+      num = num + 12;
+      arr[0] = String(num);
+    }
+  }
+  return arr.join(":").substring(0, 5);
+};
+// console.log(timeFormatChange("12:27AM"));
+
+//mapping activity
+//mapping with index of array
+
+const MappingActivity = () => {
+  const loc = [
+    { location_key: [32, 22, 11], autoSign: 1 },
+    { location_key: [332, 242, 141], autoSign: 2 },
+  ];
+  const bulk = [
+    { data: { config_key: 100, configVal: 200 } },
+    { data: { config_key: 300, configVal: 300 } },
+  ];
+  const newMapping = loc.map((val, index) => {
+    return val.location_key.map((key, index2) => {
+      return {
+        location_key: key,
+        autoSign: val.autoSign,
+        config_key: bulk[index].data.config_key,
+        configVal: bulk[index].data.configVal,
+      };
+    });
+  });
+
+  //result:[
+  //   [
+  //     { location_key: 32, autoSign: 1, config_key: 100, configVal: 200 },
+  //     { location_key: 22, autoSign: 1, config_key: 100, configVal: 200 },
+  //     { location_key: 11, autoSign: 1, config_key: 100, configVal: 200 }
+  //   ],
+  //   [
+  //     { location_key: 332, autoSign: 2, config_key: 300, configVal: 300 },
+  //     { location_key: 242, autoSign: 2, config_key: 300, configVal: 300 },
+  //     { location_key: 141, autoSign: 2, config_key: 300, configVal: 300 }
+  //   ]
+  // ]
+  //we can flat the array:
+  let finalResponse = [];
+  for (let index = 0; index < newMapping.length; index++) {
+    finalResponse = finalResponse.concat(newMapping[index]);
+  }
+  console.log(finalResponse);
+};
+//MappingActivity();
+
+// replace parameter in url:
+const replaceParamsInUrl = () => {
+  const url = "/posts/:postId/comments/:commentId";
+  const replace = [
+    { from: "postId", to: "123" },
+    { from: "commentId", to: "8993" },
+  ];
+
+  const urlArray = url.split("/");
+  let i = 0;
+  const urlArrayReplace = urlArray.map((val, index) => {
+    if (val === ":" + replace[i].from) {
+      i++;
+      return replace[i - 1].to;
+    }
+    return val;
+  });
+  return urlArrayReplace.join("/");
+};
+// console.log(replaceParamsInUrl());
+
+//validation
+// Format backend validation message to frontend format
+//final results:
+//// ["Email: Can't be blank", "Password: Must contain symbols, Must be at least 8 symbols", "passwordConfirmation: Must match with password"]
+
+const checkValidation = () => {
+  const backendErrors = {
+    email: {
+      errors: [
+        {
+          message: "Can't be blank",
+        },
+      ],
+    },
+    password: {
+      errors: [
+        {
+          message: "Must contain symbols in different case",
+        },
+        {
+          message: "Must be at least 8 symbols length",
+        },
+      ],
+    },
+    passwordConfirmation: {
+      errors: [
+        {
+          message: "Must match with password",
+        },
+      ],
+    },
+  };
+  const result = [];
+  for (const property in backendErrors) {
+    for (
+      let index = 0;
+      index < backendErrors[property]["errors"].length;
+      index++
+    ) {
+      if (index === 0) {
+        result.push(
+          [property] +
+            ": " +
+            backendErrors[property]["errors"][index]["message"]
+        );
+      } else {
+        result.push(backendErrors[property]["errors"][index]["message"]);
+      }
+    }
+  }
+  console.log(result);
+};
+//checkValidation();
+// Transform flat list to nested list
+
+//result
+//[
+// {
+//    id: 1,
+//    children: [
+//      {
+//        id: 3,
+//        children: [
+//          {
+//            id: 4,
+//            children: []
+//          }
+//        ]
+//      }
+//    ]
+// },
+// {
+//    id: 2,
+//    children: [
+//      {
+//        id: 5,
+//        children: []
+//      }
+//    ]
+// }
+//]
+const nestedList = () => {
+  const flatList = [
+    {
+      id: 1,
+      name: "lvl 1 item 1",
+      parentId: null,
+    },
+    {
+      id: 2,
+      name: "lvl 1 item 2",
+      parentId: null,
+    },
+    {
+      id: 3,
+      name: "lvl 2 item 3",
+      parentId: 1,
+    },
+    {
+      id: 4,
+      name: "lvl 3 item 4",
+      parentId: 3,
+    },
+    {
+      id: 5,
+      name: "lvl 2 item 5",
+      parentId: 2,
+    },
+  ];
+};
