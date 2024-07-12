@@ -1856,3 +1856,24 @@ const nestedList = () => {
     },
   ];
 };
+// function greeting() {
+//   throw "Hello world!";
+// }
+
+// function sayHi() {
+//   try {
+//     const data = greeting();
+//     console.log("It worked!", data);
+//   } catch (e) {
+//     console.log("Oh no an error:", e);
+//   }
+// }
+
+// sayHi();
+
+// const s = new Set();
+// let a = [1, 2, 3];
+// s.add(a);
+// console.log(s);
+// s.add(a);
+// console.log(s);

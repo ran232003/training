@@ -1,0 +1,100 @@
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.right = null;
+    this.left = null;
+  }
+  insert(data) {
+    let pointer = this;
+    while (true) {
+      if (data < pointer.data) {
+        if (pointer.left === null) {
+          pointer.left = new Node(data);
+          break;
+        }
+        pointer = pointer.left;
+      } else if (pointer.data < data) {
+        if (pointer.right === null) {
+          pointer.right = new Node(data);
+          break;
+        }
+        pointer = pointer.right;
+      }
+    }
+  }
+  contains(data) {
+    let pointer = this;
+    while (true) {
+      if (data <= pointer.data) {
+        if (data === pointer.data) {
+          return pointer;
+        }
+        if (pointer.left === null) {
+          return false;
+        }
+        pointer = pointer.left;
+      } else if (pointer.data <= data) {
+        if (data === pointer.data) {
+          return pointer;
+        }
+        if (pointer.right === null) {
+          return false;
+        }
+        pointer = pointer.right;
+      }
+    }
+  }
+}
+const testInsret = () => {
+  const root = new Node(10);
+  root.insert(5);
+  root.insert(15);
+
+  root.insert(2);
+
+  root.insert(6);
+  root.insert(67);
+  console.log(JSON.stringify(root, null, 2));
+  console.log(root.contains(1));
+};
+//testInsret();
+
+function isValidBST(root) {
+  if (!root) return true;
+
+  const stack = [];
+  let current = root;
+  let prev = null;
+
+  while (stack.length > 0 || current) {
+    while (current) {
+      stack.push(current);
+      current = current.left;
+    }
+
+    current = stack.pop();
+
+    if (prev !== null && current.data <= prev.data) {
+      return false;
+    }
+
+    prev = current;
+    current = current.right;
+  }
+
+  return true;
+}
+const testIsValidBST = () => {
+  const root = new Node(10);
+  root.insert(5);
+  root.insert(7);
+
+  root.insert(3);
+
+  root.insert(12);
+  root.insert(11);
+  root.insert(15);
+  isValidBST(root);
+  console.log(JSON.stringify(root, null, 2));
+};
+testIsValidBST();
